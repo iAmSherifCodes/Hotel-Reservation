@@ -17,5 +17,5 @@ class IRoom(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_is_free(self):
+    def is_reserved(self):
         pass

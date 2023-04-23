@@ -1,3 +1,4 @@
+from datetime import datetime, date
 from enum import property
 
 from dto.IRoom import IRoom
@@ -8,11 +9,28 @@ from dto.RoomType import RoomType
 class Room(IRoom):
 
     def __init__(self, room_type: RoomType = RoomType.NULL):
+        self._check_in_date: datetime = datetime(1, 1, 1)
+        self._check_out_date: datetime = datetime(2, 1, 1)
         self._price: int = 0
         self._room_number: int = 0
         self._room_id: str = "ROOM-" + str(self.get_room_number())
         self._room_type: RoomType = room_type
         self._is_reserved: bool = False
+
+    def set_check_in_date(self, year: int, month: int, day: int) -> None:
+        self._check_in_date = datetime(year, month, day)
+
+    # def set_check_in_date(self, new_date: date) -> None:
+    #     self._check_in_date = new_date
+
+    def set_check_out_date(self, year: int, month: int, day: int) -> None:
+        self._check_out_date = datetime(year, month, day)
+
+    def get_check_in_date(self) -> date:
+        return self._check_in_date.date()
+
+    def get_check_out_date(self) -> date:
+        return self._check_out_date.date()
 
     def get_room_id(self) -> str:
         return self._room_id
@@ -44,8 +62,11 @@ class Room(IRoom):
     def get_room_number(self) -> int:
         return self._room_number
 
-    def get_is_free(self) -> bool:
+    def is_reserved(self) -> bool:
         return self._is_reserved
+
+    def set_is_reserved(self, room_status: bool) -> None:
+        self._is_reserved = room_status
 
     def set_room_type(self, room_type: RoomType) -> None:
         if room_type in RoomType and room_type != RoomType.NULL:
@@ -58,9 +79,6 @@ class Room(IRoom):
 
     def set_room_number(self, room_id: int) -> None:
         self._room_number = room_id
-
-    def set_is_room_free(self, is_room_free: bool) -> None:
-        self._is_reserved = is_room_free
 
     def __repr__(self):
         return f"""

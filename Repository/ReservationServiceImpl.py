@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import Any
 
-from model.Customer import Customer
-from model.Room import Room
+from dto.Customer import Customer
+from dto.Room import Room
 from Repository.IReservationService import IReservationService
 
 
@@ -27,7 +27,11 @@ class ReservationService(IReservationService):
 
     def reserve_a_room(self, customer: Customer, room: Room, check_in_date: datetime, check_out_date: datetime):
         if room in self.rooms:
-            room.set_is_room_free(True)
+            room.set_is_reserved(True)
+            if check_in_date == check_out_date:
+                room.set_is_reserved(False)
+
+
 
     def find_rooms(self, check_in_date, check_out_date):
         pass
