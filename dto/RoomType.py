@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class RoomType(Enum):
-    SINGLE = "One Bed"
-    DOUBLE = "Two Beds"
-    EXCLUSIVE = "Lounge Inclusive"
+    SINGLE = 10
+    DOUBLE = 20
+    EXCLUSIVE = 50
     NULL = None

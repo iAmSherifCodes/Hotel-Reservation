@@ -9,7 +9,7 @@ class IRoom(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_room_price(self) -> int:
+    def room_price(self) -> int:
         pass
 
     @abc.abstractmethod

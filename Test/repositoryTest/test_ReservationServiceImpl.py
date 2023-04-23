@@ -44,3 +44,10 @@ class Test(TestCase):
         room_service.add_room(third_room)
         room_service.add_room(second_room)
         self.assertEqual(None, room_service.get_room(4))
+
+    def test_add_multiple_rooms(self):
+        new_room = Room(True, 10)
+        room_service = ReservationService()
+        room_service.add_room(new_room)
+        print(room_service.get_all_rooms())
+        self.assertEqual(1, room_service.get_length_of_rooms())

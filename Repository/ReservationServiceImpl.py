@@ -42,3 +42,6 @@ class ReservationService(IReservationService):
 
     def get_length_of_rooms(self) -> int:
         return len(self.rooms)
+
+    def get_all_rooms(self) -> list[Room]:
+        return self.rooms

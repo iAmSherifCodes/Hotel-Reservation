@@ -8,3 +8,4 @@ hotel room based on room availability.
 ### Goal
 
 To demonstrate ability to design classes using OOP, organise and process data with collections..
+
