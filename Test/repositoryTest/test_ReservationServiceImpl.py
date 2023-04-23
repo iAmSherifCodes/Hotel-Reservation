@@ -7,19 +7,19 @@ from dto.Room import Room
 class Test(TestCase):
 
     def test_when_add_room_in_reservation_room_id_increment(self):
-        new_room = Room(10, True, 10)
+        new_room = Room(True, 10)
         room_service = ReservationService()
         room_service.add_room(new_room)
         self.assertEqual(1, room_service.get_last_id_generated())
 
     def test_when_add_room_in_reservation_room_has_a_number(self):
-        new_room = Room(10, True, 10)
+        new_room = Room(True, 10)
         room_service = ReservationService()
         room_service.add_room(new_room)
         self.assertEqual(1, new_room.get_room_number())
 
     def test_when_add_room_in_reservation_length_of_room_increase(self):
-        new_room = Room(10, True, 10)
+        new_room = Room( True, 10)
         room_service = ReservationService()
         room_service.add_room(new_room)
         room_service.add_room(new_room)

@@ -17,7 +17,7 @@ class ReservationService(IReservationService):
         self.last_room_number_generated += 1
         self.rooms.append(room)
 
-    def get_room(self, room_id: int) -> Room | None :
+    def get_room(self, room_id: int) -> Room | None:
         for room in self.rooms:
             if room.get_room_number() == room_id:
                 return room

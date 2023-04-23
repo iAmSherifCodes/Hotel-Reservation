@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from model.RoomType import RoomType
-from model.Room import Room, InvalidRoomType
+from dto.RoomType import RoomType
+from dto.Room import Room, InvalidRoomType
 
 
 class TestRoom(TestCase):

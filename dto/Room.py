@@ -1,5 +1,6 @@
-from model.IRoom import IRoom
-from model.RoomType import RoomType
+from dto.IRoom import IRoom
+
+from dto.RoomType import RoomType
 
 
 class Room(IRoom):
@@ -7,6 +8,7 @@ class Room(IRoom):
     def __init__(self, is_free: bool, price: int):
         self.price = price
         self.room_number = 0
+        self.__room_id = "ROOM-" + str(self.get_room_number())
         self.room_type = RoomType.NULL
         self.is_free = is_free
 
@@ -37,13 +39,13 @@ class Room(IRoom):
     def set_is_room_free(self, is_room_free: bool) -> None:
         self.is_free = is_room_free
 
-    # def __repr__(self):
-    #     return f"""
-    #     ---ROOM RE---
-    #     Price : {self.get_room_price()}
-    #     Room Number : {self.get_room_number}
-    #     Room Type : {self.get_room_type()}
-    #     """
+    def __repr__(self):
+        return f"""
+        ---ROOM RE---
+        Price : {self.get_room_price()}
+        Room Number : {self.get_room_number}
+        Room Type : {self.get_room_type()}
+        """
 
 
 class InvalidRoomType(Exception):
