@@ -26,7 +26,8 @@ class ReservationService(IReservationService):
                 return None
 
     def reserve_a_room(self, customer: Customer, room: Room, check_in_date: datetime, check_out_date: datetime):
-        pass
+        if room in self.rooms:
+            room.set_is_room_free(True)
 
     def find_rooms(self, check_in_date, check_out_date):
         pass

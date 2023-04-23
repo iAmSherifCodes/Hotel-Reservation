@@ -27,5 +27,14 @@ class TestRoom(TestCase):
     def test_room_Single_room_price_is_10(self):
         room = Room(True)
         room.set_room_type(RoomType.SINGLE)
-        print(room.room_price())
         self.assertEqual(10, room.room_price())
+
+    def test_room_Double_room_price_is_20(self):
+        room = Room(True)
+        room.set_room_type(RoomType.DOUBLE)
+        self.assertEqual(20, room.room_price())
+
+    def test_room_Exclusive_room_price_is_50(self):
+        room = Room(True)
+        room.set_room_type(RoomType.EXCLUSIVE)
+        self.assertEqual(50, room.room_price())
