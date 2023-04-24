@@ -1,5 +1,6 @@
-from datetime import datetime, date
-from enum import property
+from datetime import date
+
+from multipledispatch import dispatch
 
 from dto.IRoom import IRoom
 
@@ -8,32 +9,40 @@ from dto.RoomType import RoomType
 
 class Room(IRoom):
 
-    def __init__(self, room_type: RoomType = RoomType.NULL):
-        self._check_in_date: datetime = datetime(1, 1, 1)
-        self._check_out_date: datetime = datetime(2, 1, 1)
+    def __init__(self, check_in_date: date = date(1, 1, 1), check_out_date: date = date(2, 1, 1),
+                 room_type: RoomType = RoomType.NULL):
+        self._check_in_date: date = check_in_date
+        self._check_out_date: date = check_out_date
         self._price: int = 0
         self._room_number: int = 0
-        self._room_id: str = "ROOM-" + str(self.get_room_number())
+        self._room_id: str = "ROOM " + str(self.get_room_number())
         self._room_type: RoomType = room_type
         self._is_reserved: bool = False
 
+    @dispatch(int, int, int)
     def set_check_in_date(self, year: int, month: int, day: int) -> None:
-        self._check_in_date = datetime(year, month, day)
+        self._check_in_date = date(year, month, day)
 
-    # def set_check_in_date(self, new_date: date) -> None:
-    #     self._check_in_date = new_date
+    @dispatch(date)
+    def set_check_in_date(self, new_date: date) -> None:
+        self._check_in_date = new_date
 
+    @dispatch(int, int, int)
     def set_check_out_date(self, year: int, month: int, day: int) -> None:
-        self._check_out_date = datetime(year, month, day)
+        self._check_out_date = date(year, month, day)
+
+    @dispatch(date)
+    def set_check_out_date(self, new_date: date) -> None:
+        self._check_out_date = new_date
 
     def get_check_in_date(self) -> date:
-        return self._check_in_date.date()
+        return self._check_in_date
 
     def get_check_out_date(self) -> date:
-        return self._check_out_date.date()
+        return self._check_out_date
 
     def get_room_id(self) -> str:
-        return self._room_id
+        return "ROOM " + str(self.get_room_number())
 
     def get_room_type(self) -> RoomType:
         return self._room_type
@@ -63,6 +72,8 @@ class Room(IRoom):
         return self._room_number
 
     def is_reserved(self) -> bool:
+        if self.get_check_in_date() == self.get_check_out_date():
+            return not self._is_reserved
         return self._is_reserved
 
     def set_is_reserved(self, room_status: bool) -> None:
@@ -82,11 +93,13 @@ class Room(IRoom):
 
     def __repr__(self):
         return f"""
-        ---ROOM RE---
+        --- {self.get_room_id()} ---
         Price : {self.room_price()}
         Room ID : {self.get_room_id()}
         Room Type : {self.get_room_type()}
-        Room Availability : {self._is_reserved}
+        Check In Date : {self.get_check_in_date()}
+        Check Out Date : {self.get_check_out_date()}
+        Room Availability : {not self._is_reserved}
         """
 
 

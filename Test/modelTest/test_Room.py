@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import date
 from unittest import TestCase
 
 from dto.RoomType import RoomType
@@ -38,10 +38,10 @@ class TestRoom(TestCase):
 
     def test_set_check_in_date(self):
         self.room.set_check_in_date(2020, 9, 9)
-        new_date: datetime = datetime(2020, 9, 9)
-        self.assertEqual(new_date.date(), self.room.get_check_in_date())
+        new_date: date = date(2020, 9, 9)
+        self.assertEqual(new_date, self.room.get_check_in_date())
 
     def test_set_check_out_date(self):
         self.room.set_check_out_date(2020, 9, 15)
-        new_date: datetime = datetime(2020, 9, 15)
-        self.assertEqual(new_date.date(), self.room.get_check_out_date())
+        new_date: date = date(2020, 9, 15)
+        self.assertEqual(new_date, self.room.get_check_out_date())

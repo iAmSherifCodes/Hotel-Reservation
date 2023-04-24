@@ -1,9 +1,19 @@
-from datetime import datetime
-from typing import Any
+from datetime import date
+from typing import Any, Type
 
 from dto.Customer import Customer
 from dto.Room import Room
 from Repository.IReservationService import IReservationService
+
+
+class RoomNotFound(Exception):
+    def __str__(self):
+        return "Room Not found"
+
+
+class RoomNotAvailableForReservation(Exception):
+    def __str__(self):
+        return "Room Not Available For Reservation"
 
 
 class ReservationService(IReservationService):
@@ -17,21 +27,29 @@ class ReservationService(IReservationService):
         self.last_room_number_generated += 1
         self.rooms.append(room)
 
-    def get_room(self, room_id: int) -> Room | None:
+    @staticmethod
+    def _room_is_found(x: Room, y: Room) -> bool:
+        return x == y
+
+    @staticmethod
+    def _set_room_availability(room: Room):
+        if not room.is_reserved():
+            room.set_is_reserved(True)
+        else:
+            raise RoomNotAvailableForReservation()
+
+    def get_room(self, room_id: int) -> Room:
         for room in self.rooms:
             if room.get_room_number() == room_id:
                 return room
-        for room in self.rooms:
-            if room.get_room_number() != room_id:
-                return None
+        raise RoomNotFound()
 
-    def reserve_a_room(self, customer: Customer, room: Room, check_in_date: datetime, check_out_date: datetime):
-        if room in self.rooms:
-            room.set_is_reserved(True)
-            if check_in_date == check_out_date:
-                room.set_is_reserved(False)
-
-
+    def reserve_a_room(self, customer: Customer, room: Room, check_in_date: date, check_out_date: date):
+        for _ in self.rooms:
+            if self._room_is_found(_, room):
+                self._set_room_availability(room)
+            # else:
+        # raise RoomNotAvailableForReservation
 
     def find_rooms(self, check_in_date, check_out_date):
         pass
