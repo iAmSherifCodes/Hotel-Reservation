@@ -1,6 +1,4 @@
-from model.IRoom import IRoom
-from model.Room import Room
-from model.RoomType import RoomType
+from data.model.Room import Room
 
 
 class FreeRoom(Room):

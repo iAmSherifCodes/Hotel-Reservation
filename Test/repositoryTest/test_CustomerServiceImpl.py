@@ -1,6 +1,6 @@
 from unittest import TestCase
-from Repository.CustomerServiceImpl import CustomerServiceImpl, NoCustomerFound
-from model.Customer import Customer
+from service.CustomerServiceImpl import CustomerServiceImpl, NoCustomerFound
+from data.model.Customer import Customer
 
 
 class Test(TestCase):

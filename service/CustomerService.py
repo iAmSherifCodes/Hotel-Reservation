@@ -1,6 +1,6 @@
 import abc
 
-from model.Customer import Customer
+from data.model.Customer import Customer
 
 
 class ICustomerService(metaclass=abc.ABCMeta):

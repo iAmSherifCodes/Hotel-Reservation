@@ -1,9 +1,8 @@
 from datetime import date
-from typing import Any, Type
 
-from dto.Customer import Customer
-from dto.Room import Room
-from Repository.IReservationService import IReservationService
+from dto.createNewCustomerRequest.Customer import Customer
+from data.model.Room import Room
+from service.ReservationService import IReservationService
 
 
 class RoomNotFound(Exception):
@@ -27,6 +26,12 @@ class ReservationService(IReservationService):
         self.last_room_number_generated += 1
         self.rooms.append(room)
 
+    def get_room(self, room_id: int) -> Room:
+        for room in self.rooms:
+            if room.get_room_number() == room_id:
+                return room
+        raise RoomNotFound()
+
     @staticmethod
     def _room_is_found(x: Room, y: Room) -> bool:
         return x == y
@@ -37,12 +42,6 @@ class ReservationService(IReservationService):
             room.set_is_reserved(True)
         else:
             raise RoomNotAvailableForReservation()
-
-    def get_room(self, room_id: int) -> Room:
-        for room in self.rooms:
-            if room.get_room_number() == room_id:
-                return room
-        raise RoomNotFound()
 
     def reserve_a_room(self, customer: Customer, room: Room, check_in_date: date, check_out_date: date):
         for _ in self.rooms:

@@ -1,16 +1,15 @@
 from datetime import timedelta, date
 from unittest import TestCase
-from Repository.ReservationServiceImpl import ReservationService, RoomNotAvailableForReservation, RoomNotFound
-from dto.Customer import Customer
+from data.Repository import ReservationService, RoomNotAvailableForReservation, RoomNotFound
+from dto.createNewCustomerRequest.Customer import Customer
 from dto.Room import Room
-from dto.RoomType import RoomType
 
 
 class Test(TestCase):
 
     def setUp(self) -> None:
         self.check_in_date: date = date.today()
-        self.check_out_date: date = date(2023, 4, 27)
+        self.check_out_date: date = date(2023, 5, 1)
         self.first_room = Room(check_in_date=self.check_in_date, check_out_date=self.check_out_date)
         self.room_service = ReservationService()
         self.room_service.add_room(self.first_room)
@@ -52,9 +51,11 @@ class Test(TestCase):
 
     def test_that_when_customer_day_elapses_room_becomes_unreserved(self):
         self.assertTrue(self.first_room.is_reserved())
-        add_to_check_in_date: timedelta = timedelta(2)
+        add_to_check_in_date: timedelta = timedelta(4)
         self.check_in_date += add_to_check_in_date
         self.first_room.set_check_in_date(self.check_in_date)
+        print(self.check_in_date)
+        print(self.check_out_date)
         self.assertFalse(self.first_room.is_reserved())
 
     def test_that_if_room_is_reserved_is_true_room_is_not_available_for_reservation(self):
@@ -64,3 +65,10 @@ class Test(TestCase):
                                              self.first_room,
                                              self.check_in_date,
                                              self.check_out_date)
+
+    def test_that_if_room_is_reserved_suggest_other_free_rooms(self):
+        second_check_in = date(2023, 4, 26)
+        second_check_out = date(2023, 4, 29)
+        second_room = Room(check_in_date=second_check_in, check_out_date=second_check_out)
+        self.room_service.add_room(second_room)
+        

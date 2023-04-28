@@ -1,6 +1,6 @@
 from datetime import datetime
-from model.Customer import Customer
-from model.RoomType import RoomType
+from data.model.Customer import Customer
+from data.model import RoomType
 
 
 class HotelResources:

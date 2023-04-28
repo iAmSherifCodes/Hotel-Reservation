@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from model.Customer import is_email_valid, Customer, EmailErrorException
+from data.model.Customer import is_email_valid, Customer, EmailErrorException
 
 
 class Test(TestCase):

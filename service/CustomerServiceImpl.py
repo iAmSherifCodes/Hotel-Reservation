@@ -1,5 +1,5 @@
-from Repository.ICustomerService import ICustomerService
-from model.Customer import Customer
+from service.CustomerService import ICustomerService
+from data.model.Customer import Customer
 
 
 class CustomerServiceImpl(ICustomerService):

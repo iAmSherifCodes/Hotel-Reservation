@@ -1,6 +1,6 @@
 import abc
 
-from model.RoomType import RoomType
+from data.model import RoomType
 
 
 class IRoom(metaclass=abc.ABCMeta):

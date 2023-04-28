@@ -1,6 +1,6 @@
 import abc
 
-from model.Room import Room
+from data.model.Room import Room
 
 
 class IReservationService(metaclass=abc.ABCMeta):

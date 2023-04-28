@@ -1,11 +1,9 @@
-import datetime
-
-from model.Customer import Customer
-from model.IRoom import IRoom
+from data.model.Customer import Customer
+from data.model.IRoom import IRoom
 from datetime import date
 
-from model.Room import Room
-from model.RoomType import RoomType
+from data.model.Room import Room
+from data.model.RoomType import RoomType
 
 
 class Reservation:
