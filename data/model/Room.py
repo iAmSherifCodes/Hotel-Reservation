@@ -1,12 +1,10 @@
 from datetime import date
 
 from multipledispatch import dispatch
-
-from data.model.IRoom import IRoom
 from data.model.RoomType import RoomType
 
 
-class Room(IRoom):
+class Room:
 
     def __init__(self, check_in_date: date = date(1, 1, 1), check_out_date: date = date(2, 1, 1),
                  room_type: RoomType = RoomType.NULL):
@@ -55,7 +53,7 @@ class Room(IRoom):
     def _is_room_exclusive(self) -> bool:
         return self.get_room_type() == RoomType.EXCLUSIVE
 
-    def room_price(self):
+    def get_room_price(self):
         # To make method return <class 'int'> from Enum.value
         # Got Error -> Expected type 'int', got '() -> Any | () -> Any' instead
         if self._is_room_single():
@@ -93,7 +91,7 @@ class Room(IRoom):
     def __repr__(self):
         return f"""
             --- {self.get_room_id()} ---
-            Price : {self.room_price()}
+            Price : {self.get_room_price()}
             Room ID : {self.get_room_id()}
             Room Type : {self.get_room_type()}
             Check In Date : {self.get_check_in_date()}

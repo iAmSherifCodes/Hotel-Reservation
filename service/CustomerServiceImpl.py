@@ -1,4 +1,4 @@
-from service.CustomerService import ICustomerService
+from service.ICustomerService import ICustomerService
 from data.model.Customer import Customer
 
 

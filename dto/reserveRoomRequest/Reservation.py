@@ -1,5 +1,5 @@
 from data.model.Customer import Customer
-from data.model.IRoom import IRoom
+from data.Repository.RoomRepository import IRoom
 from datetime import date
 
 from data.model.Room import Room

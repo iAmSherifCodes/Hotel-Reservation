@@ -2,7 +2,7 @@ from datetime import date
 
 from dto.createNewCustomerRequest.Customer import Customer
 from data.model.Room import Room
-from service.ReservationService import IReservationService
+from service.IReservationService import IReservationService
 
 
 class RoomNotFound(Exception):

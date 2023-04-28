@@ -1,0 +1,2 @@
+class FreeRoomRepository:
+    pass

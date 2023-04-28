@@ -13,11 +13,10 @@ class EmailErrorException(Exception):
 
 class Customer:
 
-    def __init__(self, first_name : str, last_name : str, email:str):
+    def __init__(self, first_name: str, last_name: str, email: str):
         self._first_name = first_name
         self._last_name = last_name
         self._customer_id = 0
-        # self.set_email(email)
         if not is_email_valid(email):
             raise EmailErrorException
         else:
