@@ -1,8 +1,8 @@
 from datetime import timedelta, date
 from unittest import TestCase
-from data.Repository import ReservationService, RoomNotAvailableForReservation, RoomNotFound
 from dto.createNewCustomerRequest.Customer import Customer
 from dto.Room import Room
+from service.ReservationServiceImpl import ReservationService, RoomNotAvailableForReservation, RoomNotFound
 
 
 class Test(TestCase):
@@ -51,7 +51,7 @@ class Test(TestCase):
 
     def test_that_when_customer_day_elapses_room_becomes_unreserved(self):
         self.assertTrue(self.first_room.is_reserved())
-        add_to_check_in_date: timedelta = timedelta(4)
+        add_to_check_in_date: timedelta = timedelta(2)
         self.check_in_date += add_to_check_in_date
         self.first_room.set_check_in_date(self.check_in_date)
         print(self.check_in_date)

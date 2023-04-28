@@ -67,3 +67,7 @@ class ReservationService(IReservationService):
 
     def get_all_rooms(self) -> list[Room]:
         return self.rooms
+
+
+# ToDo
+#  - Look to refactor the logic in service layer
