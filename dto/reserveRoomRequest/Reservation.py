@@ -1,5 +1,5 @@
 from data.model.Customer import Customer
-from data.Repository.RoomRepository import IRoom
+from data.Repository.RoomRepository import RoomRepository
 from datetime import date
 
 from data.model.Room import Room
@@ -7,7 +7,7 @@ from data.model.RoomType import RoomType
 
 
 class Reservation:
-    def __init__(self, room: IRoom, customer: Customer, check_in: date, check_out: date):
+    def __init__(self, room: RoomRepository, customer: Customer, check_in: date, check_out: date):
         self.room = room
         self.customer = customer
         self.check_in_date = check_in

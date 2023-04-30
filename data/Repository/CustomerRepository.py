@@ -15,3 +15,7 @@ class CustomerRepository(abc.ABC):
     @abc.abstractmethod
     def get_all_customers(self) -> list[Customer]:
         pass
+
+    @abc.abstractmethod
+    def count_of_customers(self) -> int:
+        pass

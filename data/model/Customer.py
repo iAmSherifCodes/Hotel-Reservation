@@ -13,14 +13,14 @@ class EmailErrorException(Exception):
 
 class Customer:
 
-    def __init__(self, first_name: str, last_name: str, email: str):
-        self._first_name = first_name
-        self._last_name = last_name
+    def __init__(self):
+        self._first_name = None
+        self._last_name = None
         self._customer_id = 0
-        if not is_email_valid(email):
-            raise EmailErrorException
-        else:
-            self._email = email
+        # if not is_email_valid(email):
+            # raise EmailErrorException
+        # else:
+        self._email = None
 
     def get_first_name(self) -> str:
         return self._first_name
@@ -54,4 +54,5 @@ class Customer:
         ---CUSTOMER---
         Customer Name : {self.get_first_name() + " " + self._last_name}
         Customer Email : {self.get_email()}
+        Customer ID : {self.get_id()}
         """

@@ -3,7 +3,7 @@ import abc
 from data.model.Room import Room
 
 
-class IRoom(metaclass=abc.ABCMeta):
+class RoomRepository(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def save(self, room: Room) -> Room:

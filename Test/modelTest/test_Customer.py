@@ -10,8 +10,9 @@ class Test(TestCase):
 
     def test_customer_pass_invalid_email_in_constructor_raise_exception(self):
         with self.assertRaises(EmailErrorException):
-            new_customer = Customer("John", "Doe", "johndow.com@gmail")
+            new_customer = Customer()
+            new_customer.set_email("john@doegmail.673com")
 
     def test_that_customer_pass_valid(self):
-        new_customer = Customer("John", "Doe", "johndoe@gmail.com")
+        new_customer = Customer()
         self.assertIsNotNone(new_customer)
