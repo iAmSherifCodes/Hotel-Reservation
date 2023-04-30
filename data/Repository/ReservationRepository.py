@@ -15,3 +15,7 @@ class ReservationRepository(abc.ABC):
     @abc.abstractmethod
     def get_all_reservations(self) -> list[Reservation]:
         pass
+
+    @abc.abstractmethod
+    def get_number_of_all_reservations(self) -> int:
+        pass

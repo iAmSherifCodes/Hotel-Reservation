@@ -53,6 +53,7 @@ class Test(TestCase):
         # second_customer.set_first_name("2pac")
         # self.customerRepository.save(new_customer)
         # self.customerRepository.save(second_customer)
+        # print(self.customerRepository.get_all_customers())
         # self.assertEqual(3, self.customerRepository.count_of_customers())
         self.assertEqual(new_customer, self.customerRepository.find_by_id(1))
 
