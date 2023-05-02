@@ -9,6 +9,10 @@ from data.model.Room import Room
 class IReservationService(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
+    def search_for_available_rooms(self, check_in: date, check_out: date):
+        pass
+
+    @abc.abstractmethod
     def reserve_a_room(self, customer: Customer, room: Room, check_in_date: date, check_out_date: date) -> Reservation:
         pass
 
@@ -25,5 +29,5 @@ class IReservationService(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def find_reservation_by_customer_first_name(self, customer_first_name: str) -> list[Reservation]:
+    def find_reservations_by_customer_first_name(self, customer_first_name: str) -> list[Reservation]:
         pass

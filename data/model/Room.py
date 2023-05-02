@@ -1,6 +1,3 @@
-from datetime import date
-
-from multipledispatch import dispatch
 from data.model.RoomType import RoomType
 
 
@@ -17,6 +14,14 @@ class Room:
 
     def get_room_id(self) -> str:
         return "ROOM " + str(self.get_room_number())
+
+    def get_room_description(self) -> str:
+        if self._room_type == RoomType.SINGLE:
+            return "SINGLE ROOM - ONE BED"
+        elif self._room_type == RoomType.DOUBLE:
+            return "TWO ROOMS - WITH VISITOR PARLOR"
+        elif self._room_type == RoomType.EXCLUSIVE:
+            return "EXCLUSIVE ROOM - WITH VISITOR PARLOR AND LODGE"
 
     def get_room_type(self) -> RoomType:
         return self._room_type
@@ -45,13 +50,13 @@ class Room:
     def get_room_number(self) -> int:
         return self._room_number
 
-    # def is_reserved(self) -> bool:
-    #     if self.get_check_in_date() == self.get_check_out_date():
-    #         return not self._is_reserved
-    #     return self._is_reserved
+    def get_is_reserved(self) -> bool:
+        # if self.get_check_in_date() == self.get_check_out_date():
+        #     return not self._is_reserved
+        return self._is_reserved
 
-    # def set_is_reserved(self, room_status: bool) -> None:
-    #     self._is_reserved = room_status
+    def set_is_reserved(self, room_status: bool) -> None:
+        self._is_reserved = room_status
 
     def set_room_type(self, room_type: str) -> None:
         if room_type.lower() == "single":
@@ -78,7 +83,7 @@ class Room:
             --- {self.get_room_id()} ---
             Price : {self.get_room_price()}
             Room ID : {self.get_room_id()}
-            Room Type : {self.get_room_type()}
+            Room Type : {self.get_room_description()}
             Room Availability : {not self._is_reserved}
             """
 

@@ -1,8 +1,10 @@
-# ToDo
-#  - write the logic for Room Repo
 from data.Repository.RoomRepository import RoomRepository
 from data.model.Room import Room
-from service.ReservationServiceImpl import RoomNotFound
+
+
+class RoomNotFound(Exception):
+    def __str__(self):
+        return "Room Not found"
 
 
 class RoomRepositoryImpl(RoomRepository):

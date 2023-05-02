@@ -7,7 +7,6 @@ from data.model.Customer import Customer
 class CustomerServiceImpl(ICustomerService):
 
     def __init__(self):
-        # self._customers = []
         self._customer_repository: CustomerRepository = CustomerRepositoryImpl()
         self._count = 0
         self._last_id_created = 0
@@ -34,11 +33,8 @@ class CustomerServiceImpl(ICustomerService):
                 return customer
         raise NoCustomerFound
 
-    def get_all_customers(self) -> list[Customer]:
+    def display_all_customers(self) -> list[Customer]:
         return self._customer_repository.get_all_customers()
-
-    def get_last_id(self) -> int:
-        return self._last_id_created
 
     def get_count_of_customers(self) -> int:
         return self._customer_repository.count_of_customers()

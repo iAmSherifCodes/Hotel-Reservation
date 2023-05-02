@@ -17,5 +17,5 @@ class ICustomerService(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_all_customers(self) -> list[Customer]:
+    def display_all_customers(self) -> list[Customer]:
         pass
