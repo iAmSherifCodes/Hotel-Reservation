@@ -19,27 +19,27 @@ class Room(IRoom):
         self._room_type: RoomType = room_type
         self._is_reserved: bool = False
 
-    @dispatch(int, int, int)
-    def set_check_in_date(self, year: int, month: int, day: int) -> None:
-        self._check_in_date = date(year, month, day)
-
-    @dispatch(date)
-    def set_check_in_date(self, new_date: date) -> None:
-        self._check_in_date = new_date
-
-    @dispatch(int, int, int)
-    def set_check_out_date(self, year: int, month: int, day: int) -> None:
-        self._check_out_date = date(year, month, day)
-
-    @dispatch(date)
-    def set_check_out_date(self, new_date: date) -> None:
-        self._check_out_date = new_date
-
-    def get_check_in_date(self) -> date:
-        return self._check_in_date
-
-    def get_check_out_date(self) -> date:
-        return self._check_out_date
+    # @dispatch(int, int, int)
+    # def set_check_in_date(self, year: int, month: int, day: int) -> None:
+    #     self._check_in_date = date(year, month, day)
+    #
+    # @dispatch(date)
+    # def set_check_in_date(self, new_date: date) -> None:
+    #     self._check_in_date = new_date
+    #
+    # @dispatch(int, int, int)
+    # def set_check_out_date(self, year: int, month: int, day: int) -> None:
+    #     self._check_out_date = date(year, month, day)
+    #
+    # @dispatch(date)
+    # def set_check_out_date(self, new_date: date) -> None:
+    #     self._check_out_date = new_date
+    #
+    # def get_check_in_date(self) -> date:
+    #     return self._check_in_date
+    #
+    # def get_check_out_date(self) -> date:
+    #     return self._check_out_date
 
     def get_room_id(self) -> str:
         return "ROOM " + str(self.get_room_number())

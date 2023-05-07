@@ -18,7 +18,7 @@ class Customer:
         self._last_name = None
         self._customer_id = 0
         # if not is_email_valid(email):
-            # raise EmailErrorException
+        # raise EmailErrorException
         # else:
         self._email = None
 
