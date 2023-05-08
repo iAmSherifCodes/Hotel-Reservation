@@ -89,7 +89,7 @@ class ReservationServiceImpl(IReservationService):
     def find_rooms(self, check_in_date, check_out_date):
         pass
 
-    def get_customers_reservations(self, customer):
+    def get_customers_reservation(self):
         customer_reservations = []
         for reservation in self.reservation_repository.get_all_reservations():
             if reservation.get_reservation_id() < 1:

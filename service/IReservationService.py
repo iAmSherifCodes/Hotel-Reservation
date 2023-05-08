@@ -17,7 +17,7 @@ class IReservationService(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_customers_reservation(self, customer: Customer) -> list[Reservation]:
+    def get_customers_reservation(self) -> list[Reservation]:
         pass
 
     @abc.abstractmethod
@@ -29,5 +29,5 @@ class IReservationService(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def find_reservations_by_customer_first_name(self, customer_first_name: str) -> list[Reservation]:
+    def find_reservations_by_customer_email(self, customer_email: str) -> list[Reservation]:
         pass
