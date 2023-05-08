@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 from multipledispatch import dispatch
 
@@ -19,6 +19,11 @@ class NoAvailableRoomForReservation(Exception):
 class RoomIsReserved(Exception):
     def __repr__(self):
         return "Room Is Reserved"
+
+
+class NoRoomFound(Exception):
+    def __repr__(self):
+        return "No Room Found"
 
 
 class ReservationServiceImpl(IReservationService):
@@ -45,70 +50,73 @@ class ReservationServiceImpl(IReservationService):
                 status = True
         return status
 
+    def _conflict_reservation(self) -> bool:
+        for _ in self.reservation_repository.get_all_reservations():
+            if _.get_reserved_room().get_is_reserved():
+                return True
+
+    def _add_seven_days_to_user_check_in(self, check_in_date, check_out_date):
+        return self.search_for_available_rooms(check_in_date + timedelta(days=7), check_out_date + timedelta(days=4))
+
+    def _no_rooms_available_for_date_range(self, check_in, check_out) -> int:
+        return len(self.search_for_available_rooms(check_in, check_out)) == 0
+
+    @staticmethod
+    def _set_reservation(customer: Customer, room: Room, check_in_date: date, check_out_date: date) -> Reservation:
+        new_reservation: Reservation = Reservation()
+        new_reservation.set_room_to_reserve(room)
+        new_reservation.set_who_to_reserve(customer)
+        new_reservation.set_check_in_date(check_in_date)
+        new_reservation.set_check_out_date(check_out_date)
+        return new_reservation
+
     def reserve_a_room(self, customer: Customer, room: Room, check_in_date: date, check_out_date: date):
         if self._reservation_exist(room):
-            pass
+            if self._conflict_reservation():
+                if self._no_rooms_available_for_date_range(check_in_date, check_out_date):
+                    return self._add_seven_days_to_user_check_in(check_in_date, check_out_date)
 
-
-    # RoomIsReserved()
-
-        # if self._room_is_found(_, room):
-        #     self._set_room_availability(room)
-        # else:
-        # raise RoomNotAvailableForReservation()
-        # tion
-
-    # @dispatch()
-    # def search_for_available_rooms(self):
-    #     available_rooms: list[Room] = []
-    #     for room in self.get_all_rooms():
-    #         if not room.get_is_reserved():
-    #             available_rooms.append(room)
-    #
-    #     return available_rooms
+        self.reservation_repository.save(self._set_reservation(customer, room, check_in_date, check_out_date))
 
     @dispatch(date, date)
     def search_for_available_rooms(self, check_in: date, check_out: date):
         available_rooms: list[Room] = []
         for reservation in self.reservation_repository.get_all_reservations():
-            if not reservation.get_check_in_date() == check_in:
+            if not (reservation.get_check_in_date() == check_in and reservation.get_check_out_date() == check_out):
                 available_rooms.append(reservation.get_reserved_room())
-
-        if len(available_rooms) == 0:
-            raise NoAvailableRoomForReservation()
         return available_rooms
-        # else:
-        # if room.
-        # m
-        # if self.get_check_in_date() == self.get_check_out_date():
-        # return not self._is_reserved
 
     def find_rooms(self, check_in_date, check_out_date):
         pass
 
-    def get_customers_reservation(self, customer):
-        pass
+    def get_customers_reservations(self, customer):
+        customer_reservations = []
+        for reservation in self.reservation_repository.get_all_reservations():
+            if reservation.get_reservation_id() < 1:
+                customer_reservations.append(reservation)
+        return customer_reservations
 
-    def print_reservation(self):
-        pass
+    def print_reservation(self) -> list[ReservationRepository]:
+        return self.reservation_repository.get_all_reservations()
 
-    def get_last_id_generated(self):
+    def _get_last_id_generated(self):
         return self.last_room_number_generated
 
-    # def get_length_of_rooms(self) -> int:
-    #     return len(self.reservation_repository.get_all_reservations())
-
-    # def get_all_rooms(self) -> list[Room]:
-    #     return self.reservation_repository.get_all_rooms()
-
-    def find_reservations_by_customer_first_name(self, customer_email: str) -> list[Reservation]:
-        pass
+    def find_reservations_by_customer_email(self, customer_email: str) -> list[Reservation]:
+        customer_reserves = []
+        for reservation in self.reservation_repository.get_all_reservations():
+            if reservation.get_who_reserved_room().get_email() == customer_email: customer_reserves.append(reservation)
+        return customer_reserves
 
     def display_reservations(self) -> list[Reservation]:
-        pass
+        return self.reservation_repository.get_all_reservations()
 
     def find_reservation_by_id(self, reservation_id: int) -> Reservation:
-        pass
+        for reservation in self.reservation_repository.get_all_reservations():
+            if reservation.get_reservation_id() == reservation_id:
+                return reservation
+            else:
+                NoRoomFound()
 
 
 class RoomNotAvailableForReservation(Exception):
