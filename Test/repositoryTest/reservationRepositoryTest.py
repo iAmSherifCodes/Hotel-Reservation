@@ -23,6 +23,7 @@ class test(TestCase):
                             "Check-in-date": self.reservation.set_check_in_date(date.today()),
                             "Check-out-date": self.reservation.set_check_out_date(2023, 5, 4)
                             }
+        print(self.reservation_repo)
 
     def test_that_when_reservation_is_saved_the_length_of_list_increases(self):
         self.reservation_repo.save(self.reservation)
