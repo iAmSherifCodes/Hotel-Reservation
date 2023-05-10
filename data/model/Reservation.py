@@ -66,7 +66,7 @@ class Reservation:
     def get_reservation_id(self) -> int:
         return self._reservation_id
 
-    def __repr__(self):
+    def __str__(self):
         return f"""
         ---Reservation---
         Reservation ID = {self.get_reservation_id()}

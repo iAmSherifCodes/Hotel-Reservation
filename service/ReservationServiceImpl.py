@@ -71,10 +71,10 @@ class ReservationServiceImpl(IReservationService):
         return new_reservation
 
     def reserve_a_room(self, customer: Customer, room: Room, check_in_date: date, check_out_date: date):
-        if self._reservation_exist(room):
-            if self._conflict_reservation():
-                if self._no_rooms_available_for_date_range(check_in_date, check_out_date):
-                    return self._add_seven_days_to_user_check_in(check_in_date, check_out_date)
+        if self._reservation_exist(room) and self._conflict_reservation():
+            if self._no_rooms_available_for_date_range(check_in_date, check_out_date):
+                return self._add_seven_days_to_user_check_in(check_in_date, check_out_date)
+
 
         self.reservation_repository.save(self._set_reservation(customer, room, check_in_date, check_out_date))
 

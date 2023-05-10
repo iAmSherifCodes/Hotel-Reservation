@@ -18,5 +18,5 @@ class FreeRoom(Room):
         ---FREE ROOM---
         Price : {self.get_room_price()}
         Room Number : {self.get_room_number}
-        Is Reserved : {self.is_reserved()}
+        Is Reserved : 
         """

@@ -54,3 +54,5 @@ class ReservationRepositoryImpl(ReservationRepository):
 
     def get_number_of_all_reservations(self) -> int:
         return len(self._reservations)
+
+

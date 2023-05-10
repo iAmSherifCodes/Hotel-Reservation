@@ -1,14 +1,11 @@
 import re
 
+from Utils.Exceptions import EmailErrorException
+
 
 def is_email_valid(email: str) -> bool:
     form = r'^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,}$'
     return bool(re.fullmatch(form, email))
-
-
-class EmailErrorException(Exception):
-    def __repr__(self):
-        return "Invalid Email"
 
 
 class Customer:

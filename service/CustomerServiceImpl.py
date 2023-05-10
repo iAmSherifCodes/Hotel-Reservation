@@ -1,21 +1,33 @@
+from Builder.Builder import Builder
 from data.Repository.CustomerRepository import CustomerRepository
 from data.Repository.CustomerRepositoryImpl import CustomerRepositoryImpl
+from dto.Request.CreateCustomerRequest import CreateCustomerRequest
+from dto.Response.CreateCustomerResponse import CreateCustomerResponse
 from service.ICustomerService import ICustomerService
 from data.model.Customer import Customer
 
 
 class CustomerServiceImpl(ICustomerService):
+    _customer_repository: CustomerRepository = CustomerRepositoryImpl()
 
     def __init__(self):
-        self._customer_repository: CustomerRepository = CustomerRepositoryImpl()
-        self._count = 0
-        self._last_id_created = 0
+        pass
 
-    def register_new_customer(self, customer: Customer) -> Customer:
-        self._customer_repository.save(customer)
-        customer.set_id(self._last_id_created + 1)
-        self._last_id_created += 1
-        return customer
+    def register_new_customer(self, customer_request: CreateCustomerRequest) -> CreateCustomerResponse:
+        # new_customer = Customer()
+        # new_customer.set_first_name(customer_request.get_first_name())
+        # new_customer.set_last_name(customer_request.get_last_name())
+        # new_customer.set_email(customer_request.get_email())
+
+        new_customer = Builder.buildCreateCustomerRequest(self, customer_request)
+        saved_customer = self._customer_repository.save(new_customer)
+        customer_response = Builder.buildCreateCustomerResponse(self, saved_customer)
+        return customer_response
+        # saved_customer = self._customer_repository.save(new_customer)
+        # customer_response = CreateCustomerResponse()
+        # customer_response.set_first_name(saved_customer.get_first_name())
+        # customer_response.set_message("Account Successfully Created")
+        # return customer_response
 
     def find_customer_by_email(self, customer_email) -> Customer:
         for customer in self._customer_repository.get_all_customers():

@@ -7,8 +7,8 @@ class Room:
         # self._check_in_date: date = check_in_date
         # self._check_out_date: date = check_out_date
         self._price: int = 0
-        self._room_number: int = 0
-        self._room_id: str = "ROOM " + str(self.get_room_number())
+        self._room_id: int = 0
+        self._room_number: str = "ROOM " + str(self.get_room_number())
         self._room_type: RoomType = room_type
         self._is_reserved: bool = False
 
@@ -48,7 +48,7 @@ class Room:
         return self._price
 
     def get_room_number(self) -> int:
-        return self._room_number
+        return self._room_id
 
     def get_is_reserved(self) -> bool:
         # if self.get_check_in_date() == self.get_check_out_date():
@@ -62,13 +62,13 @@ class Room:
         if room_type.lower() == "single":
             # if room_type in RoomType and room_type != RoomType.NULL:
             self._room_type = RoomType.SINGLE
-            self.set_room_number(self._room_number + 1)
+            self.set_room_number(self._room_id + 1)
         elif room_type.lower() == "double":
             self._room_type = RoomType.DOUBLE
-            self.set_room_number(self._room_number + 1)
+            self.set_room_number(self._room_id + 1)
         elif room_type.lower() == "exclusive":
             self._room_type = RoomType.EXCLUSIVE
-            self.set_room_number(self._room_number + 1)
+            self.set_room_number(self._room_id + 1)
         else:
             raise InvalidRoomType
 
@@ -76,7 +76,7 @@ class Room:
         return self._price
 
     def set_room_number(self, room_id: int) -> None:
-        self._room_number = room_id
+        self._room_id = room_id
 
     def __repr__(self):
         return f"""
