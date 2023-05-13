@@ -1,5 +1,6 @@
 from multipledispatch import dispatch
 
+from Utils.AppUtils import AppUtils
 from data.model.Customer import Customer
 from data.model.Room import Room
 from datetime import date
@@ -12,7 +13,7 @@ class Reservation:
         self._customer: Customer = Customer()
         self._check_in_date: date = date(1, 1, 1)
         self._check_out_date: date = date(2, 1, 1)
-        self._reservation_id = 0
+        self._reservation_id = 0 #AppUtils.generate_id(self)
 
     def set_room_to_reserve(self, room: Room):
         self._room = room

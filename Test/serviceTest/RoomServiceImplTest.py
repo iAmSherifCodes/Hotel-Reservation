@@ -1,8 +1,8 @@
 from unittest import TestCase
 
+from Utils.Exceptions.RoomNotFound import RoomNotFound
 from data.model.Room import Room
 from service.IRoom import IRoom
-from service.ReservationServiceImpl import RoomNotFound
 from service.RoomServiceImpl import RoomServiceImpl
 
 

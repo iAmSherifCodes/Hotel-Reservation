@@ -1,3 +1,4 @@
+from Utils.AppUtils import AppUtils
 from data.model.RoomType import RoomType
 
 
@@ -7,7 +8,7 @@ class Room:
         # self._check_in_date: date = check_in_date
         # self._check_out_date: date = check_out_date
         self._price: int = 0
-        self._room_id: int = 0
+        self._room_id: int = 0 #AppUtils.generate_id(self)
         self._room_number: str = "ROOM " + str(self.get_room_number())
         self._room_type: RoomType = room_type
         self._is_reserved: bool = False
@@ -62,13 +63,13 @@ class Room:
         if room_type.lower() == "single":
             # if room_type in RoomType and room_type != RoomType.NULL:
             self._room_type = RoomType.SINGLE
-            self.set_room_number(self._room_id + 1)
+            self.set_room_number(self._room_id)
         elif room_type.lower() == "double":
             self._room_type = RoomType.DOUBLE
-            self.set_room_number(self._room_id + 1)
+            self.set_room_number(self._room_id)
         elif room_type.lower() == "exclusive":
             self._room_type = RoomType.EXCLUSIVE
-            self.set_room_number(self._room_id + 1)
+            self.set_room_number(self._room_id)
         else:
             raise InvalidRoomType
 

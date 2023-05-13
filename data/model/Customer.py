@@ -1,5 +1,6 @@
 import re
 
+from Utils.AppUtils import AppUtils
 from Utils.Exceptions import EmailErrorException
 
 
@@ -13,7 +14,7 @@ class Customer:
     def __init__(self):
         self._first_name = None
         self._last_name = None
-        self._customer_id = 0
+        self._customer_id = 0 #AppUtils.generate_id(self)
         # if not is_email_valid(email):
         # raise EmailErrorException
         # else:

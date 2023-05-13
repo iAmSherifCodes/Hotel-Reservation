@@ -1,9 +1,9 @@
 class AppUtils:
 
     def __init__(self):
-        self._last_generated_id = 0
+        pass
         
     @staticmethod
-    def generate_id(self) -> int:
-        self._last_generated_id += 1
-        return self._last_generated_id
+    def generate_id() -> int:
+        last_generated_id = 1
+        return last_generated_id + 1

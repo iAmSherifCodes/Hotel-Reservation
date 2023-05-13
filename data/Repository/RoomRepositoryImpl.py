@@ -11,10 +11,10 @@ from data.model.Room import Room
 class RoomRepositoryImpl(RoomRepository):
     def __init__(self):
         self._rooms = []
-        # self._last_room_number_generated = 0
+        # self._last_room_number_generated = AppUtils.generate_id()  # 0
 
     def save(self, room: Room):
-        room.set_room_number(AppUtils.generate_id(self))
+        room.set_room_number(AppUtils.generate_id())
         self._rooms.append(room)
         # self._last_room_number_generated += 1
 

@@ -8,6 +8,8 @@ from data.Repository.ReservationRepositoryImpl import ReservationRepositoryImpl
 from data.model.Customer import Customer
 from data.model.Reservation import Reservation
 from data.model.Room import Room
+from dto.Request.FindRoomsRequest import FindRoomRequest
+from dto.Response.FindRoomResponse import FindRoomResponse
 from service.IReservationService import IReservationService
 
 
@@ -75,8 +77,7 @@ class ReservationServiceImpl(IReservationService):
             if self._no_rooms_available_for_date_range(check_in_date, check_out_date):
                 return self._add_seven_days_to_user_check_in(check_in_date, check_out_date)
 
-
-        self.reservation_repository.save(self._set_reservation(customer, room, check_in_date, check_out_date))
+        return self.reservation_repository.save(self._set_reservation(customer, room, check_in_date, check_out_date))
 
     @dispatch(date, date)
     def search_for_available_rooms(self, check_in: date, check_out: date):
@@ -86,7 +87,7 @@ class ReservationServiceImpl(IReservationService):
                 available_rooms.append(reservation.get_reserved_room())
         return available_rooms
 
-    def find_rooms(self, check_in_date, check_out_date):
+    def find_rooms(self, find_room_request: FindRoomRequest) -> FindRoomResponse:
         pass
 
     def get_customers_reservation(self):

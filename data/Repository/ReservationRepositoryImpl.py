@@ -2,6 +2,7 @@
 #  - write the logic for reservation Repo
 from multipledispatch import dispatch
 
+from Utils.AppUtils import AppUtils
 from data.Repository.ReservationRepository import ReservationRepository
 from data.model.Reservation import Reservation
 
@@ -14,12 +15,12 @@ class NoReservationFound(Exception):
 class ReservationRepositoryImpl(ReservationRepository):
     def __init__(self):
         self._reservations: list[Reservation] = []
-        self._last_reservation_number_generated: int = 0
+        # self._reservation_id: int = AppUtils.generate_id()  # 0
 
     def save(self, reservation: Reservation) -> Reservation:
-        reservation.set_reservation_id(self._last_reservation_number_generated + 1)
+        reservation.set_reservation_id(AppUtils.generate_id())
         self._reservations.append(reservation)
-        self._last_reservation_number_generated += 1
+        # self._reservation_id += 1
         return reservation
 
     def delete(self, reservation_to_delete: Reservation) -> None:
@@ -54,5 +55,3 @@ class ReservationRepositoryImpl(ReservationRepository):
 
     def get_number_of_all_reservations(self) -> int:
         return len(self._reservations)
-
-

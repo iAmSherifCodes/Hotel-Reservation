@@ -1,8 +1,10 @@
 from datetime import timedelta, date
 from unittest import TestCase
 
+from data.model.Room import Room
 from service.IReservationService import IReservationService
 from service.ReservationServiceImpl import ReservationServiceImpl
+from service.RoomServiceImpl import RoomServiceImpl
 
 
 class Test(TestCase):
@@ -10,6 +12,20 @@ class Test(TestCase):
     def test_that_we_have_a_reservation_service_impl(self):
         reservation_service: IReservationService = ReservationServiceImpl()
         self.assertIsNotNone(reservation_service)
+
+    def test_find_rooms_by_check_in_date_returns_list_of_available_rooms(self):
+        reservation_service = ReservationServiceImpl()
+        room_service = RoomServiceImpl()
+        check_in_date: date = date.today()
+        check_out_date: date = date(2023, 5, 1)
+        first_room = Room()
+        second_room = Room()
+        third_room = Room()
+        room_service.add_room(third_room)
+        room_service.add_room(second_room)
+        first_room.set_room_type("SINGLE")
+        room_service = RoomServiceImpl()
+        room_service.add_room(first_room)
 
     # def setUp(self) -> None:
     #     self.reservation_service = ReservationServiceImpl()
