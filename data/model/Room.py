@@ -8,7 +8,7 @@ class Room:
         # self._check_in_date: date = check_in_date
         # self._check_out_date: date = check_out_date
         self._price: int = 0
-        self._room_id: int = 0 #AppUtils.generate_id(self)
+        self._room_id: int = 0  # AppUtils.generate_id(self)
         self._room_number: str = "ROOM " + str(self.get_room_number())
         self._room_type: RoomType = room_type
         self._is_reserved: bool = False

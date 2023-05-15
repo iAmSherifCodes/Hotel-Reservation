@@ -1,6 +1,7 @@
 from datetime import timedelta, date
 from unittest import TestCase
 
+from data.model.Customer import Customer
 from data.model.Room import Room
 from service.IReservationService import IReservationService
 from service.ReservationServiceImpl import ReservationServiceImpl
@@ -16,16 +17,24 @@ class Test(TestCase):
     def test_find_rooms_by_check_in_date_returns_list_of_available_rooms(self):
         reservation_service = ReservationServiceImpl()
         room_service = RoomServiceImpl()
-        check_in_date: date = date.today()
-        check_out_date: date = date(2023, 5, 1)
         first_room = Room()
         second_room = Room()
         third_room = Room()
+        fourth_room = Room()
+        fifth_room = Room()
+        room_service.add_room(fourth_room)
+        room_service.add_room(fifth_room)
         room_service.add_room(third_room)
         room_service.add_room(second_room)
-        first_room.set_room_type("SINGLE")
-        room_service = RoomServiceImpl()
         room_service.add_room(first_room)
+        # first_customer = Customer()
+        # second_customer = Customer()
+        check_in_date: date = date.today()
+        check_out_date: date = date(2023, 5, 15)
+        # reservation_service
+        print(reservation_service.search_for_available_rooms(check_in_date, check_out_date))
+
+
 
     # def setUp(self) -> None:
     #     self.reservation_service = ReservationServiceImpl()

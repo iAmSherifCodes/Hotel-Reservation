@@ -31,8 +31,8 @@ class NoRoomFound(Exception):
 class ReservationServiceImpl(IReservationService):
 
     def __init__(self):
-        self.reservation_repository: ReservationRepository = ReservationRepositoryImpl()
-        self.last_room_number_generated = 0
+        self._reservation_repository: ReservationRepository = ReservationRepositoryImpl()
+        self._last_room_number_generated = 0
 
     @staticmethod
     def _room_is_found(x: Room, y: Room) -> bool:
@@ -47,13 +47,13 @@ class ReservationServiceImpl(IReservationService):
 
     def _reservation_exist(self, room) -> bool:
         status = False
-        for _ in self.reservation_repository.get_all_reservations():
+        for _ in self._reservation_repository.get_all_reservations():
             if _.get_reserved_room().get_room_number() == room.get_room_number():
                 status = True
         return status
 
     def _conflict_reservation(self) -> bool:
-        for _ in self.reservation_repository.get_all_reservations():
+        for _ in self._reservation_repository.get_all_reservations():
             if _.get_reserved_room().get_is_reserved():
                 return True
 
@@ -77,43 +77,45 @@ class ReservationServiceImpl(IReservationService):
             if self._no_rooms_available_for_date_range(check_in_date, check_out_date):
                 return self._add_seven_days_to_user_check_in(check_in_date, check_out_date)
 
-        return self.reservation_repository.save(self._set_reservation(customer, room, check_in_date, check_out_date))
+        return self._reservation_repository.save(self._set_reservation(customer, room, check_in_date, check_out_date))
 
     @dispatch(date, date)
     def search_for_available_rooms(self, check_in: date, check_out: date):
         available_rooms: list[Room] = []
-        for reservation in self.reservation_repository.get_all_reservations():
-            if not (reservation.get_check_in_date() == check_in and reservation.get_check_out_date() == check_out):
+        for reservation in self._reservation_repository.get_all_reservations():
+            if reservation.get_check_in_date() != check_in and reservation.get_check_out_date() != check_out:
                 available_rooms.append(reservation.get_reserved_room())
-        return available_rooms
+            else:
+                return self._reservation_repository.get_all_reservations()
+        # return available_rooms
 
     def find_rooms(self, find_room_request: FindRoomRequest) -> FindRoomResponse:
         pass
 
     def get_customers_reservation(self):
         customer_reservations = []
-        for reservation in self.reservation_repository.get_all_reservations():
+        for reservation in self._reservation_repository.get_all_reservations():
             if reservation.get_reservation_id() < 1:
                 customer_reservations.append(reservation)
         return customer_reservations
 
     def print_reservation(self) -> list[ReservationRepository]:
-        return self.reservation_repository.get_all_reservations()
+        return self._reservation_repository.get_all_reservations()
 
     def _get_last_id_generated(self):
-        return self.last_room_number_generated
+        return self._last_room_number_generated
 
     def find_reservations_by_customer_email(self, customer_email: str) -> list[Reservation]:
         customer_reserves = []
-        for reservation in self.reservation_repository.get_all_reservations():
+        for reservation in self._reservation_repository.get_all_reservations():
             if reservation.get_who_reserved_room().get_email() == customer_email: customer_reserves.append(reservation)
         return customer_reserves
 
     def display_reservations(self) -> list[Reservation]:
-        return self.reservation_repository.get_all_reservations()
+        return self._reservation_repository.get_all_reservations()
 
     def find_reservation_by_id(self, reservation_id: int) -> Reservation:
-        for reservation in self.reservation_repository.get_all_reservations():
+        for reservation in self._reservation_repository.get_all_reservations():
             if reservation.get_reservation_id() == reservation_id:
                 return reservation
             else:
