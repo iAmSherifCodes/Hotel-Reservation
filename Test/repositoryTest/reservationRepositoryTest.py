@@ -28,12 +28,19 @@ class test(TestCase):
 
     def test_that_when_reservation_is_saved_the_length_of_list_increases(self):
         self.reservation_repo.save(self.reservation)
+
         self.assertEqual(1, self.reservation_repo.get_number_of_all_reservations())
 
     def test_that_when_delete_reservation_reservation_does_not_exist(self):
-        self.reservation_repo.save(self.reservation)
+        # self.assertEqual(1, self.reservation_repo.get_number_of_all_reservations())
+        new_reserve = self.reservation_repo.save(self.reservation)
+        self.assertIsNotNone(new_reserve)
         self.assertEqual(1, self.reservation_repo.get_number_of_all_reservations())
-        self.reservation_repo.delete_by_id()
+        # print(new_reserve.get_reservation_id())
+        # print(new_reserve)
+        self.reservation_repo.delete_by_id(new_reserve.get_reservation_id())
+        # self.assertIsNone(new_reserve)
+        # print(self.reservation_repo.get_all_reservations())
         self.assertEqual(0, self.reservation_repo.get_number_of_all_reservations())
 
     def test_that_when_delete_reservation_by_id_reservation_does_not_exist(self):

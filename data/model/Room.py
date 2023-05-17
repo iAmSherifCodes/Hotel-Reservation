@@ -1,28 +1,23 @@
+from uuid import UUID
+
 from Utils.AppUtils import AppUtils
+from Utils.Exceptions.InvalidRoomType import InvalidRoomType
 from data.model.RoomType import RoomType
 
 
 class Room:
 
     def __init__(self, room_type: RoomType = RoomType.NULL):
-        # self._check_in_date: date = check_in_date
-        # self._check_out_date: date = check_out_date
         self._price: int = 0
-        self._room_id: int = 0  # AppUtils.generate_id(self)
-        self._room_number: str = "ROOM " + str(self.get_room_number())
+        self._room_id: str = ""
         self._room_type: RoomType = room_type
         self._is_reserved: bool = False
 
     def get_room_id(self) -> str:
-        return "ROOM " + str(self.get_room_number())
+        return self._room_id
 
-    def get_room_description(self) -> str:
-        if self._room_type == RoomType.SINGLE:
-            return "SINGLE ROOM - ONE BED"
-        elif self._room_type == RoomType.DOUBLE:
-            return "TWO ROOMS - WITH VISITOR PARLOR"
-        elif self._room_type == RoomType.EXCLUSIVE:
-            return "EXCLUSIVE ROOM - WITH VISITOR PARLOR AND LODGE"
+    def set_room_id(self, room_id: str) -> None:
+        self._room_id = room_id
 
     def get_room_type(self) -> RoomType:
         return self._room_type
@@ -48,12 +43,7 @@ class Room:
 
         return self._price
 
-    def get_room_number(self) -> int:
-        return self._room_id
-
     def get_is_reserved(self) -> bool:
-        # if self.get_check_in_date() == self.get_check_out_date():
-        #     return not self._is_reserved
         return self._is_reserved
 
     def set_is_reserved(self, room_status: bool) -> None:
@@ -61,37 +51,34 @@ class Room:
 
     def set_room_type(self, room_type: str) -> None:
         if room_type.lower() == "single":
-            # if room_type in RoomType and room_type != RoomType.NULL:
             self._room_type = RoomType.SINGLE
-            self.set_room_number(self._room_id)
+            self.set_room_id(str(AppUtils.generate_id()))
         elif room_type.lower() == "double":
             self._room_type = RoomType.DOUBLE
-            self.set_room_number(self._room_id)
+            self.set_room_id(str(AppUtils.generate_id()))
         elif room_type.lower() == "exclusive":
             self._room_type = RoomType.EXCLUSIVE
-            self.set_room_number(self._room_id)
+            self.set_room_id(str(AppUtils.generate_id()))
         else:
             raise InvalidRoomType
 
-    def _set_room_price(self) -> int:
-        return self._price
-
-    def set_room_number(self, room_id: int) -> None:
-        self._room_id = room_id
+    def _get_room_description(self) -> str:
+        if self._room_type == RoomType.SINGLE:
+            return "SINGLE ROOM - ONE BED"
+        elif self._room_type == RoomType.DOUBLE:
+            return "TWO ROOMS - WITH VISITOR PARLOR"
+        elif self._room_type == RoomType.EXCLUSIVE:
+            return "EXCLUSIVE ROOM - WITH VISITOR PARLOR AND LODGE"
 
     def __repr__(self):
         return f"""
             --- {self.get_room_id()} ---
             Price : {self.get_room_price()}
             Room ID : {self.get_room_id()}
-            Room Type : {self.get_room_description()}
+            Room Type : {self._get_room_description()}
             Room Availability : {not self._is_reserved}
             """
 
-
-class InvalidRoomType(Exception):
-    def __repr__(self):
-        return "Invalid Room Type"
     # def __str__(self):
     #     return f"""
     #     ---ROOM---

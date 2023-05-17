@@ -1,11 +1,7 @@
 from Utils.AppUtils import AppUtils
+from Utils.Exceptions.CustomerNotFound import CustomerNotFound
 from data.Repository.CustomerRepository import CustomerRepository
 from data.model.Customer import Customer
-
-
-class CustomerNotFound(Exception):
-    def __repr__(self):
-        return "Customer Not Found"
 
 
 class CustomerRepositoryImpl(CustomerRepository):
@@ -14,7 +10,7 @@ class CustomerRepositoryImpl(CustomerRepository):
         self._customers = []
 
     def save(self, customer: Customer) -> Customer:
-        customer_exist: bool = customer.get_id() != 0
+        customer_exist: bool = customer.get_id() != ""
         if customer_exist:
             return self._update_customer(customer)
         else:
@@ -26,18 +22,15 @@ class CustomerRepositoryImpl(CustomerRepository):
         return customer
 
     def _save_new_customer(self, customer: Customer) -> Customer:
-        customer.set_id(AppUtils.generate_id())
+        customer.set_id(str(AppUtils.generate_id()))
         self._customers.append(customer)
-        # self._last_id_generated += 1
         return customer
 
-    def find_by_id(self, customer_id: int) -> Customer:
+    def find_by_id(self, customer_id: str) -> Customer | None:
         for customer in self._customers:
-            id_match: bool = customer.get_id() == customer_id
-
-            if id_match:
+            if customer.get_id() == customer_id:
                 return customer
-        raise CustomerNotFound()
+        return None
 
     def get_all_customers(self) -> list[Customer]:
         return self._customers

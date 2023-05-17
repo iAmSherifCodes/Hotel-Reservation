@@ -1,6 +1,4 @@
 from multipledispatch import dispatch
-
-from Utils.AppUtils import AppUtils
 from data.model.Customer import Customer
 from data.model.Room import Room
 from datetime import date
@@ -13,15 +11,15 @@ class Reservation:
         self._customer: Customer = Customer()
         self._check_in_date: date = date(1, 1, 1)
         self._check_out_date: date = date(2, 1, 1)
-        self._reservation_id = 0  # AppUtils.generate_id(self)
+        self._reservation_id: str = ""
 
-    def set_room_to_reserve(self, room: Room):
+    def set_room_to_reserve(self, room: Room) -> None:
         self._room = room
 
     def get_reserved_room(self) -> Room:
         return self._room
 
-    def set_who_to_reserve(self, customer: Customer):
+    def set_who_to_reserve(self, customer: Customer) -> None:
         self._customer = customer
 
     def get_who_reserved_room(self) -> Customer:
@@ -49,22 +47,10 @@ class Reservation:
     def get_check_out_date(self) -> date:
         return self._check_out_date
 
-    # def set_check_in_date(self, year: int, month: int, day: int) -> None:
-    #     self.check_in_date = date(year, month, day)
-    #
-    # def get_check_in_date(self) -> date:
-    #     return self.check_in_date
-    #
-    # def set_check_out_date(self, year: int, month: int, day: int) -> None:
-    #     self.check_out_date = date(year, month, day)
-    #
-    # def get_check_out_date(self) -> date:
-    #     return self.check_out_date
-    #
     def set_reservation_id(self, reservation_id: int) -> None:
         self._reservation_id = reservation_id
 
-    def get_reservation_id(self) -> int:
+    def get_reservation_id(self) -> str:
         return self._reservation_id
 
     def __str__(self):
@@ -75,7 +61,7 @@ class Reservation:
         Customer Last Name= {self._customer.get_last_name()}
         Customer Email= {self._customer.get_email()}
         Room Type: {self._room.get_room_type()}
-        Room Number: {self._room.get_room_number()}
+        Room Number: {self._room.get_room_id()}
         Room Price: {self._room.get_room_price()}
         Check in date : {self.get_check_in_date()}
         Check out date : {self.get_check_out_date()}

@@ -1,6 +1,4 @@
 import re
-
-from Utils.AppUtils import AppUtils
 from Utils.Exceptions import EmailErrorException
 
 
@@ -12,13 +10,13 @@ def is_email_valid(email: str) -> bool:
 class Customer:
 
     def __init__(self):
-        self._first_name = None
-        self._last_name = None
-        self._customer_id = 0 #AppUtils.generate_id(self)
+        self._first_name: str = ""
+        self._last_name: str = ""
+        self._customer_id: str = ""  # AppUtils.generate_id(self)
         # if not is_email_valid(email):
         # raise EmailErrorException
         # else:
-        self._email = None
+        self._email: str = ""
 
     def get_first_name(self) -> str:
         return self._first_name
@@ -41,10 +39,10 @@ class Customer:
         else:
             self._email = email
 
-    def get_id(self) -> int:
+    def get_id(self) -> str:
         return self._customer_id
 
-    def set_id(self, customer_id) -> None:
+    def set_id(self, customer_id: str) -> None:
         self._customer_id = customer_id
 
     def __repr__(self):
