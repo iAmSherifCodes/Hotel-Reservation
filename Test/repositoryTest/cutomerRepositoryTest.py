@@ -37,8 +37,6 @@ class Test(TestCase):
 
         new_customer.set_first_name("Janet")
         second_customer.set_first_name("2pac")
-        self.customerRepository.save(new_customer)
-        self.customerRepository.save(second_customer)
         self.assertEqual(2, self.customerRepository.count_of_customers())
         self.assertIsNotNone(self.customerRepository.find_by_id(saved_second_customer.get_id()))
 

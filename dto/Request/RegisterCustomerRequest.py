@@ -1,5 +1,5 @@
 
-class CreateCustomerRequest:
+class RegisterCustomerRequest:
 
     def __init__(self):
         self._first_name: str | None = None

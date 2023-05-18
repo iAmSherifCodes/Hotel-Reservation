@@ -1,5 +1,4 @@
 import abc
-
 from data.model.Reservation import Reservation
 
 
@@ -9,7 +8,11 @@ class ReservationRepository(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def find_by_id(self, reservation_id: int) -> Reservation:
+    def find_by_id(self, reservation_id: str) -> Reservation:
+        pass
+
+    @abc.abstractmethod
+    def delete_by_id(self, reservation_id: str) -> None:
         pass
 
     @abc.abstractmethod

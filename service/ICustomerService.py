@@ -1,11 +1,13 @@
 import abc
 
 from data.model.Customer import Customer
+from dto.Request import RegisterCustomerRequest
+from dto.Response import RegisterCustomerResponse
 
 
 class ICustomerService(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def register_new_customer(self, customer: Customer) -> Customer:
+    def register_new_customer(self, register_user_request: RegisterCustomerRequest) -> RegisterCustomerResponse:
         pass
 
     @abc.abstractmethod

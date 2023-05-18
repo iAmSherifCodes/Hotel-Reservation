@@ -1,6 +1,5 @@
 from datetime import date
 from unittest import TestCase
-
 from data.Repository.ReservationRepositoryImpl import ReservationRepositoryImpl
 from data.model.Customer import Customer
 from data.model.Reservation import Reservation
@@ -24,32 +23,40 @@ class test(TestCase):
         self.reservation.set_room_to_reserve(self.room)
         self.reservation.set_who_to_reserve(self.customer)
         self.reservation.set_check_in_date(date.today())
-        self.reservation.set_check_out_date(2023, 5, 4)
+        self.reservation.set_check_out_date(2023, 5, 21)
 
     def test_that_when_reservation_is_saved_the_length_of_list_increases(self):
         self.reservation_repo.save(self.reservation)
-
         self.assertEqual(1, self.reservation_repo.get_number_of_all_reservations())
 
-    def test_that_when_delete_reservation_reservation_does_not_exist(self):
-        # self.assertEqual(1, self.reservation_repo.get_number_of_all_reservations())
-        new_reserve = self.reservation_repo.save(self.reservation)
-        self.assertIsNotNone(new_reserve)
+    def test_save_reservation(self):
+        saved_reserve = self.reservation_repo.save(self.reservation)
+        self.assertIsNotNone(saved_reserve)
+
+    def test_find_by_id(self):
+        new_customer = Customer()
+        new_room = Room()
+        new_reservation = Reservation()
+        second_saved_reserve = self.reservation_repo.save(new_reservation)
+        first_saved_reserve = self.reservation_repo.save(self.reservation)
+        found_reservation = self.reservation_repo.find_by_id(first_saved_reserve.get_reservation_id())
+        self.assertIsNotNone(found_reservation)
+
+    def test_find_by_id_returns_none_object(self):
+        new_customer = Customer()
+        new_room = Room()
+        new_reservation = Reservation()
+        second_saved_reserve = self.reservation_repo.save(new_reservation)
+        first_saved_reserve = self.reservation_repo.save(self.reservation)
+        found_reservation = self.reservation_repo.find_by_id(first_saved_reserve.get_reservation_id() + "sw")
+        self.assertIsNone(found_reservation)
+
+    def test_delete_by_id(self):
+        new_customer = Customer()
+        new_room = Room()
+        new_reservation = Reservation()
+        second_saved_reserve = self.reservation_repo.save(new_reservation)
+        first_saved_reserve = self.reservation_repo.save(self.reservation)
+        self.assertEqual(2, self.reservation_repo.get_number_of_all_reservations())
+        self.reservation_repo.delete_by_id(second_saved_reserve.get_reservation_id())
         self.assertEqual(1, self.reservation_repo.get_number_of_all_reservations())
-        # print(new_reserve.get_reservation_id())
-        # print(new_reserve)
-        self.reservation_repo.delete_by_id(new_reserve.get_reservation_id())
-        # self.assertIsNone(new_reserve)
-        # print(self.reservation_repo.get_all_reservations())
-        self.assertEqual(0, self.reservation_repo.get_number_of_all_reservations())
-
-    def test_that_when_delete_reservation_by_id_reservation_does_not_exist(self):
-        self.reservation_repo.save(self.reservation)
-        self.reservation_repo.delete_by_id(1)
-        self.assertEqual(0, self.reservation_repo.get_number_of_all_reservations())
-
-    def test_that_get_all_reservations_returns_reservations(self):
-        self.reservation_repo.save(self.reservation)
-        # self.reservation_repo.save(self.reservation)
-        # self.reservation_repo.save(self.reservation)
-        print(self.reservation)

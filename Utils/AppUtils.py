@@ -8,9 +8,9 @@ class AppUtils:
         pass
 
     @staticmethod
-    def generate_id() -> UUID:
+    def generate_id() -> str:
         # generate_uuid =
-        return uuid.uuid4()
+        return str(uuid.uuid4())
 
 
 # print(type(AppUtils.generate_id()))

@@ -10,18 +10,6 @@ class CustomerRepositoryImpl(CustomerRepository):
         self._customers = []
 
     def save(self, customer: Customer) -> Customer:
-        customer_exist: bool = customer.get_id() != ""
-        if customer_exist:
-            return self._update_customer(customer)
-        else:
-            return self._save_new_customer(customer)
-
-    def _update_customer(self, customer: Customer) -> Customer:
-        self._customers.remove(self.find_by_id(customer.get_id()))
-        self._customers.append(customer)
-        return customer
-
-    def _save_new_customer(self, customer: Customer) -> Customer:
         customer.set_id(str(AppUtils.generate_id()))
         self._customers.append(customer)
         return customer

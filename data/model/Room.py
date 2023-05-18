@@ -1,5 +1,3 @@
-from uuid import UUID
-
 from Utils.AppUtils import AppUtils
 from Utils.Exceptions.InvalidRoomType import InvalidRoomType
 from data.model.RoomType import RoomType
@@ -9,7 +7,7 @@ class Room:
 
     def __init__(self, room_type: RoomType = RoomType.NULL):
         self._price: int = 0
-        self._room_id: str = ""
+        self._room_id: str = AppUtils.generate_id()
         self._room_type: RoomType = room_type
         self._is_reserved: bool = False
 
@@ -52,13 +50,10 @@ class Room:
     def set_room_type(self, room_type: str) -> None:
         if room_type.lower() == "single":
             self._room_type = RoomType.SINGLE
-            self.set_room_id(str(AppUtils.generate_id()))
         elif room_type.lower() == "double":
             self._room_type = RoomType.DOUBLE
-            self.set_room_id(str(AppUtils.generate_id()))
         elif room_type.lower() == "exclusive":
             self._room_type = RoomType.EXCLUSIVE
-            self.set_room_id(str(AppUtils.generate_id()))
         else:
             raise InvalidRoomType
 
