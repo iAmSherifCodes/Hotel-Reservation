@@ -1,4 +1,5 @@
 from Builder.Builder import Builder
+from Utils.Exceptions.CustomerNotFound import CustomerNotFound
 from data.Repository.CustomerRepository import CustomerRepository
 from data.Repository.CustomerRepositoryImpl import CustomerRepositoryImpl
 from dto.Request.FindCustomerByEmailRequest import FindCustomerByEmailRequest
@@ -10,7 +11,6 @@ from data.model.Customer import Customer
 
 
 class CustomerServiceImpl(ICustomerService):
-
     _customer_repository: CustomerRepository = CustomerRepositoryImpl()
 
     def __init__(self):
@@ -33,32 +33,21 @@ class CustomerServiceImpl(ICustomerService):
         # return customer_response
 
     def find_customer_by_email(self, customer_email_request: FindCustomerByEmailRequest) -> FindCustomerByEmailResponse:
-        found_customer: FindCustomerByEmailResponse = FindCustomerByEmailResponse()
+        customer_email: str = customer_email_request.get_customer_email()
+
+        found_customer: Customer = Customer()
         for customer in self.display_all_customers():
-            if customer.get_email() == customer_email_request.get_customer_email():
-                found_customer.set_customer(customer)
-        return found_customer
-        # found_customer: Customer | None = None
-        # find_by_email_response: FindCustomerByEmailResponse = FindCustomerByEmailResponse()
-        # for customer in self._customer_repository.get_all_customers():
-        #     if customer.get_email() == customer_email_request:
-        #         return customer
-                # found_customer = customer
-                # find_by_email_response.set_customer(customer)
+            if customer.get_email() == customer_email:
+                # found_customer.set_first_name(customer.get_first_name())
+                # found_customer.set_last_name(customer.get_last_name())
+                # found_customer.set_email(customer.get_email())
+                response: FindCustomerByEmailResponse = FindCustomerByEmailResponse(customer.get_first_name(),
+                                                                                    customer.get_last_name(),
+                                                                                    customer.get_email(),
+                                                                                    customer.get_id())
+                return response
 
-        # return find_by_email_response
-        # for customer in self._customers:
-        #     if customer.get_email != customer_email:
-        # raise NoCustomerFound
-        # if customer_email not in self._customers:
-        #     raise NoCustomerFound
-
-    def find_customer_by_id(self, customer_id) -> Customer:
-        pass
-        # for customer in self._customer_repository.get_all_customers():
-        #     if customer.get_id() == customer_id:
-        #         return customer
-        # raise NoCustomerFound
+        raise CustomerNotFound
 
     def display_all_customers(self) -> list[Customer]:
         return self._customer_repository.get_all_customers()

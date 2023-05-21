@@ -20,5 +20,7 @@ class Builder:
         customer_response = RegisterCustomerResponse()
         customer_response.set_first_name(saved_customer.get_first_name())
         customer_response.set_customer_id(saved_customer.get_id())
+        customer_response.set_last_name(saved_customer.get_last_name())
+        customer_response.set_email(saved_customer.get_email())
         customer_response.set_message("Registration Successful")
         return customer_response

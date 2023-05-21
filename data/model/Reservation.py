@@ -13,7 +13,7 @@ class Reservation:
         self._customer: Customer = Customer()
         self._check_in_date: date = date(1, 1, 1)
         self._check_out_date: date = date(2, 1, 1)
-        self._reservation_id: str = AppUtils.generate_id()
+        self._reservation_id: str = "AppUtils.generate_id()"
 
     def set_room_to_reserve(self, room: Room) -> None:
         self._room = room

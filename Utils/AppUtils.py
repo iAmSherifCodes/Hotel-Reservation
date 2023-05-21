@@ -9,8 +9,5 @@ class AppUtils:
 
     @staticmethod
     def generate_id() -> str:
-        # generate_uuid =
         return str(uuid.uuid4())
 
-
-# print(type(AppUtils.generate_id()))

@@ -14,9 +14,9 @@ class ICustomerService(metaclass=abc.ABCMeta):
     def find_customer_by_email(self, customer_email: str) -> Customer:
         pass
 
-    @abc.abstractmethod
-    def find_customer_by_id(self, customer_id: int) -> Customer:
-        pass
+    # @abc.abstractmethod
+    # def find_customer_by_id(self, customer_id: int) -> Customer:
+    #     pass
 
     @abc.abstractmethod
     def display_all_customers(self) -> list[Customer]:

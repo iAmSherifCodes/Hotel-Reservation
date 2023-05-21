@@ -3,6 +3,8 @@ class RegisterCustomerResponse:
         self._first_name: str | None = None
         self._customer_id: str | None = None
         self._message: str | None = None
+        self._last_name: str | None = None
+        self._email: str | None = None
 
     def get_message(self) -> str:
         return self._message
@@ -15,6 +17,18 @@ class RegisterCustomerResponse:
         return self._first_name
 
     def set_first_name(self, first_name):
+        self._first_name = first_name
+
+    def get_last_name(self):
+        return self._first_name
+
+    def set_last_name(self, first_name):
+        self._first_name = first_name
+
+    def get_email(self):
+        return self._first_name
+
+    def set_email(self, first_name):
         self._first_name = first_name
 
     def get_customer_id(self) -> str:

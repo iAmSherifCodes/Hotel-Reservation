@@ -14,7 +14,7 @@ class Customer:
     def __init__(self):
         self._first_name: str = ""
         self._last_name: str = ""
-        self._customer_id: str = AppUtils.generate_id()
+        self._customer_id: str = ""
         self._email: str = ""
 
     def get_first_name(self) -> str:
