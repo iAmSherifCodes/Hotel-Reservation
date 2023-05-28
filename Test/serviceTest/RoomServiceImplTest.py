@@ -24,9 +24,7 @@ class Test(TestCase):
         self.room_service.add_room(room3)
         self.room_service.add_room(room2)
         self.room_service.add_room(room1)
-        print(room1)
-        print(self.room_service.get_room(1))
-        self.assertEqual(room1, self.room_service.get_room(3))
+        self.assertEqual(room3.get_room_id(), self.room_service.get_room_by_id(room3.get_room_id()).get_room_id())
 
     def test_room_not_found_raise_exception(self):
         room1 = Room()
@@ -38,5 +36,6 @@ class Test(TestCase):
         self.room_service.add_room(room3)
         self.room_service.add_room(room2)
         with self.assertRaises(RoomNotFound):
-            self.room_service.get_room(3)
+            self.room_service.get_room_by_id("27868323hsdhsd-sjb")
+
 

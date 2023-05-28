@@ -1,5 +1,5 @@
 class EmailErrorException(Exception):
-
     def __repr__(self):
-        return "Invalid Email"
+        return "Invalid Room Type"
+
 

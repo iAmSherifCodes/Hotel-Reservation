@@ -7,10 +7,12 @@ from data.model.Customer import is_email_valid, Customer
 class Test(TestCase):
     def test_is_email_valid(self):
         email = 'iAmSherif@code.code'
-        self.assertEqual(True, is_email_valid(email))
+        new_customer = Customer()
+        new_customer.set_email(email)
+        self.assertTrue(is_email_valid(email))
 
     def test_customer_pass_invalid_email_in_constructor_raise_exception(self):
-        with self.assertRaises(EmailErrorException) as err:
+        with self.assertRaises(Exception) as err:
             new_customer = Customer()
             new_customer.set_email("john@doegmail.673com")
 

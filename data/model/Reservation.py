@@ -63,6 +63,7 @@ class Reservation:
         Customer Last Name= {self._customer.get_last_name()}
         Customer Email= {self._customer.get_email()}
         Room Type: {self._room.get_room_type()}
+        Room Is Reserved: {self.get_reserved_room().get_is_reserved()}
         Room Number: {self._room.get_room_id()}
         Room Price: {self._room.get_room_price()}
         Check in date : {self.get_check_in_date()}

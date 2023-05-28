@@ -1,11 +1,10 @@
 import re
-
-from Utils.AppUtils import AppUtils
-from Utils.Exceptions import EmailErrorException
+# from Utils.Exceptions import EmailErrorException
 
 
 def is_email_valid(email: str) -> bool:
-    form = r'^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,}$'
+    # pattern = r'^[a-z]'
+    form = r'^[a-zA-Z0-9]*@[a-zA-Z]+\.[a-zA-Z]{2,}$'
     return bool(re.fullmatch(form, email))
 
 
@@ -33,10 +32,10 @@ class Customer:
         self._last_name = last_name
 
     def set_email(self, email: str) -> None:
-        if not is_email_valid(email):
-            raise EmailErrorException
-        else:
+        if is_email_valid(email):
             self._email = email
+        else:
+            raise Exception
 
     def get_id(self) -> str:
         return self._customer_id

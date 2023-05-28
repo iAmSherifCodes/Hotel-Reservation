@@ -8,6 +8,7 @@ class ReservationRepositoryImpl(ReservationRepository):
         self._reservations: list[Reservation] = []
 
     def save(self, reservation: Reservation) -> Reservation:
+        # new_reservation = []
         reservation.set_reservation_id(str(AppUtils.generate_id()))
         self._reservations.append(reservation)
         return reservation
