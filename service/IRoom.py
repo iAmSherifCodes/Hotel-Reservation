@@ -16,9 +16,9 @@ class IRoom(abc.ABC):
     def get_all_rooms(self) -> list[Room]:
         pass
 
-    @abc.abstractmethod
-    def search_for_available_rooms(self) -> list[Room]:
-        pass
+    # @abc.abstractmethod
+    # def search_for_available_rooms(self) -> list[Room]:
+    #     pass
 
     # @abc.abstractmethod
     # def find_available_rooms(self, check_in_date, check_out_date):

@@ -22,10 +22,3 @@ class RoomServiceImpl(IRoom):
     def get_all_rooms(self) -> list[Room]:
         return self._room_repository.get_all_rooms()
 
-    def search_for_available_rooms(self) -> list[Room]:
-        available_rooms: list[Room] = []
-        for room in self.get_all_rooms():
-            if not room.get_is_reserved():
-                available_rooms.append(room)
-        print(available_rooms)
-        return available_rooms

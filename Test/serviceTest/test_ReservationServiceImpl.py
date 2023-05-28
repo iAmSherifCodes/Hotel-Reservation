@@ -178,7 +178,11 @@ class Test(TestCase):
 
         # Provided there is a check-in and check-out from the customer
         check_in_date: date = date.today()
-        check_out_date: date = date(2023, 5, 15)
+        check_out_date1: date = date(2023, 6, 1)
+        check_out_date2: date = date(2023, 6, 2)
+        check_out_date3: date = date(2023, 6, 3)
+        check_out_date4: date = date(2023, 6, 4)
+        check_out_date5: date = date(2023, 6, 5)
 
         # first_customer
         customer = Customer()
@@ -188,14 +192,15 @@ class Test(TestCase):
         customer.set_id(first_saved_customer.get_customer_id())
 
         # reservation_service
-        reservation_service.reserve_a_room(customer, room_one, check_in_date, check_out_date)
-        reservation_service.reserve_a_room(customer, room_two, check_in_date, check_out_date)
-        reservation_service.reserve_a_room(customer, room_three, check_in_date, check_out_date)
-        reservation_service.reserve_a_room(customer, room_five, check_in_date, check_out_date)
-        reservation_service.reserve_a_room(customer, room_four, check_in_date, check_out_date)
-        # print(room_two.get_is_reserved())
+        reservation_service.reserve_a_room(customer, room_one, check_in_date, check_out_date1)
+        reservation_service.reserve_a_room(customer, room_two, check_in_date, check_out_date2)
+        reservation_service.reserve_a_room(customer, room_three, check_in_date, check_out_date3)
+        reservation_service.reserve_a_room(customer, room_five, check_in_date, check_out_date4)
+        reservation_service.reserve_a_room(customer, room_four, check_in_date, check_out_date5)
+
         self.assertTrue(room_one.get_is_reserved())
-        self.assertEqual(3, len(room_service.search_for_available_rooms()))
+        self.assertEqual(3, len(reservation_service.search_for_available_rooms(check_in_date,
+                                                                               check_out_date1)))
         # print(reservation_service.search_for_available_rooms(check_in_date, check_out_date))
 
     # def setUp(self) -> None:
