@@ -9,11 +9,15 @@ class IRoom(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_room(self, room_id: int) -> Room:
+    def get_room_by_id(self, room_id: int) -> Room:
         pass
 
     @abc.abstractmethod
     def get_all_rooms(self) -> list[Room]:
+        pass
+
+    @abc.abstractmethod
+    def search_for_available_rooms(self) -> list[Room]:
         pass
 
     # @abc.abstractmethod

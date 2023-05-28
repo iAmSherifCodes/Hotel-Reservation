@@ -8,9 +8,9 @@ from data.model.Room import Room
 
 class IReservationService(metaclass=abc.ABCMeta):
 
-    @abc.abstractmethod
-    def search_for_available_rooms(self, check_in: date, check_out: date):
-        pass
+    # @abc.abstractmethod
+    # def search_for_available_rooms(self, check_in: date, check_out: date):
+    #     pass
 
     @abc.abstractmethod
     def reserve_a_room(self, customer: Customer, room: Room, check_in_date: date, check_out_date: date) -> Reservation:

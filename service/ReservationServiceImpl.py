@@ -13,6 +13,7 @@ from data.model.Room import Room
 from dto.Request.FindRoomsRequest import FindRoomRequest
 from dto.Response.FindRoomResponse import FindRoomResponse
 from service.IReservationService import IReservationService
+from service.RoomServiceImpl import RoomServiceImpl
 
 
 class ReservationServiceImpl(IReservationService):
@@ -62,17 +63,16 @@ class ReservationServiceImpl(IReservationService):
 
     def reserve_a_room(self, customer: Customer, room: Room, check_in_date: date,
                        check_out_date: date):
-        if room.get_is_reserved():
+        if not room.get_is_reserved():
+            room.set_is_reserved(True)
+            reservation: Reservation = Reservation()
+            reservation.set_who_to_reserve(customer)
+            reservation.set_room_to_reserve(room)
+            reservation.set_check_in_date(check_in_date)
+            reservation.set_check_out_date(check_out_date)
+            self._reservation_repository.save(reservation)
+        else:
             raise RoomNotAvailableForReservation
-
-        room.set_is_reserved(True)
-        reservation: Reservation = Reservation()
-        reservation.set_who_to_reserve(customer)
-        reservation.set_room_to_reserve(room)
-        reservation.set_check_in_date(check_in_date)
-        reservation.set_check_out_date(check_out_date)
-
-        self._reservation_repository.save(reservation)
 
     # if self._reservation_exist(room) and self._conflict_reservation():
     #         if self._no_rooms_available_for_date_range(check_in_date, check_out_date):
@@ -81,10 +81,17 @@ class ReservationServiceImpl(IReservationService):
     #     return self._reservation_repository.save(self._set_reservation(customer, room, check_in_date, check_out_date))
     #
     # @dispatch(date, date)
-    def search_for_available_rooms(self, check_in: date, check_out: date):
-        pass
-
+    # def search_for_available_rooms(self, check_in: date, check_out: date):
+    #     # room_service = RoomServiceImpl()
     #     available_rooms: list[Room] = []
+    #     for reservation in self._reservation_repository.get_all_reservations():
+    #         print(reservation.get_reserved_room())
+    #         if  reservation.get_reserved_room().get_is_reserved():
+    #             # print(reservation)
+    #             available_rooms.append(reservation.get_reserved_room())
+    #     return available_rooms
+
+        # available_rooms: list[Room] = []
     #     for reservation in self._reservation_repository.get_all_reservations():
     #         if reservation.get_check_in_date() != check_in and reservation.get_check_out_date() != check_out:
     #             available_rooms.append(reservation.get_reserved_room())

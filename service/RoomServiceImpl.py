@@ -13,7 +13,7 @@ class RoomServiceImpl(IRoom):
     def add_room(self, room: Room) -> Room:
         return self._room_repository.save(room)
 
-    def get_room(self, room_id: int) -> Room:
+    def get_room_by_id(self, room_id: str) -> Room:
         for room in self._room_repository.get_all_rooms():
             if room.get_room_id() == room_id:
                 return room
@@ -21,3 +21,11 @@ class RoomServiceImpl(IRoom):
 
     def get_all_rooms(self) -> list[Room]:
         return self._room_repository.get_all_rooms()
+
+    def search_for_available_rooms(self) -> list[Room]:
+        available_rooms: list[Room] = []
+        for room in self.get_all_rooms():
+            if not room.get_is_reserved():
+                available_rooms.append(room)
+        print(available_rooms)
+        return available_rooms
