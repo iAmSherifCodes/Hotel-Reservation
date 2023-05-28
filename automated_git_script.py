@@ -8,8 +8,13 @@ import time
 
 # commit_message = input("commit message")
 # commands = ["git add .", f'git commit -m {commit_message}', "git push"]
-commands = ["git add .", f'git commit -m "Automated commit message"', "git push"]
-for i in range(len(commands)):
-    subprocess.run(commands[i], shell=True)
+# commands = ["git add .", f'git commit -m "Automated commit message"', "git push"]
+# subprocess.Popen(commands[0], shell=True)
+# for i in range(len(commands)):
+#     subprocess.Popen(commands[i], shell=True)
 
-    # push_to_git()
+# push_to_git()
+commands = ["cd ..", "git status", "git add ."]
+
+for i in range(len(commands)):
+    subprocess.Popen(commands[i], shell=True)
