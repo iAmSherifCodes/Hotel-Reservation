@@ -27,5 +27,5 @@ commands = [
     ["git", "-C", path, "push"]
 ]
 
-for command in commands:
-    subprocess.run(command, check=True)
+# for command in commands:
+#     subprocess.run(command, check=True)
