@@ -20,16 +20,16 @@ class RegisterCustomerResponse:
         self._first_name = first_name
 
     def get_last_name(self):
-        return self._first_name
+        return self._last_name
 
-    def set_last_name(self, first_name):
-        self._first_name = first_name
+    def set_last_name(self, last_name):
+        self._last_name = last_name
 
     def get_email(self):
-        return self._first_name
+        return self._email
 
-    def set_email(self, first_name):
-        self._first_name = first_name
+    def set_email(self, email):
+        self._email = email
 
     def get_customer_id(self) -> str:
         return self._customer_id

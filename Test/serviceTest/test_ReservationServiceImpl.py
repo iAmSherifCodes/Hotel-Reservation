@@ -4,6 +4,8 @@ from unittest import TestCase
 from Utils.Exceptions.RoomNotAvailableForReservation import RoomNotAvailableForReservation
 from data.model.Customer import Customer
 from data.model.Room import Room
+from dto.Request.FindReservationByCustomerEmailRequest import FindReservationByCustomerEmailRequest
+from dto.Request.FindReservationByIdRequest import FindReservationByIdRequest
 from dto.Request.RegisterCustomerRequest import RegisterCustomerRequest
 from service.CustomerServiceImpl import CustomerServiceImpl
 from service.ReservationServiceImpl import ReservationServiceImpl
@@ -145,6 +147,7 @@ class Test(TestCase):
         fourth_room.set_room_type("exclusive")
         fifth_room = Room()
         fifth_room.set_room_type("double")
+
         room_one = room_service.add_room(fourth_room)
         room_two = room_service.add_room(fifth_room)
         room_three = room_service.add_room(third_room)
@@ -192,7 +195,7 @@ class Test(TestCase):
         customer.set_id(first_saved_customer.get_customer_id())
 
         # reservation_service
-        reservation_service.reserve_a_room(customer, room_one, check_in_date, check_out_date1)
+        first_reserve = reservation_service.reserve_a_room(customer, room_one, check_in_date, check_out_date1)
         reservation_service.reserve_a_room(customer, room_two, check_in_date, check_out_date2)
         reservation_service.reserve_a_room(customer, room_three, check_in_date, check_out_date3)
         reservation_service.reserve_a_room(customer, room_five, check_in_date, check_out_date4)
@@ -201,6 +204,21 @@ class Test(TestCase):
         self.assertTrue(room_one.get_is_reserved())
         self.assertEqual(2, len(reservation_service.search_for_available_rooms(check_in_date,
                                                                                check_out_date1)))
+
+        # Find reservation by id
+        email_request: FindReservationByIdRequest = FindReservationByIdRequest()
+        email_request.set_id(first_reserve.get_reservation_id())
+        response = reservation_service.find_reservation_by_id(email_request)
+
+        # print(response.get_reservation())
+
+        # Find reservation by customer email
+        customer_request: FindReservationByCustomerEmailRequest = FindReservationByCustomerEmailRequest()
+        customer_request.set_customer_email(customer.get_email())
+        response = reservation_service.find_reservations_by_customer_email(customer_request)
+        print(response)
+        # print(response.get_customer_reservations())
+        # print(response.get_reservation())
         # print(reservation_service.search_for_available_rooms(check_in_date, check_out_date))
 
     # def setUp(self) -> None:

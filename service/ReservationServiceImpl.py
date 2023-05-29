@@ -6,7 +6,11 @@ from data.Repository.ReservationRepositoryImpl import ReservationRepositoryImpl
 from data.model.Customer import Customer
 from data.model.Reservation import Reservation
 from data.model.Room import Room
+from dto.Request.FindReservationByCustomerEmailRequest import FindReservationByCustomerEmailRequest
+from dto.Request.FindReservationByIdRequest import FindReservationByIdRequest
 from dto.Request.FindRoomsRequest import FindRoomRequest
+from dto.Response.FindReservationByCustomerEmailResponse import FindReservationByCustomerEmailResponse
+from dto.Response.FindReservationByIdResponse import FindReservationByIdResponse
 from dto.Response.FindRoomResponse import FindRoomResponse
 from service.IReservationService import IReservationService
 from service.IRoom import IRoom
@@ -29,7 +33,7 @@ class ReservationServiceImpl(IReservationService):
             reservation.set_room_to_reserve(room)
             reservation.set_check_in_date(check_in_date)
             reservation.set_check_out_date(check_out_date)
-            self._reservation_repository.save(reservation)
+            return self._reservation_repository.save(reservation)
         else:
             raise RoomNotAvailableForReservation
 
@@ -45,31 +49,35 @@ class ReservationServiceImpl(IReservationService):
             for reservation in self._reservation_repository.get_all_reservations():
                 if reservation.get_check_out_date() < check_in:
                     available_rooms.append(reservation.get_reserved_room())
-        print(available_rooms)
+        # print(available_rooms)
 
         return available_rooms
 
-    # TODO
-    #   Search for recommended rooms. If there are no available rooms for the
-    #   customer's date range, a search will be performed that displays recommended
-    #   rooms on alternative dates. The recommended room search will add seven days to
-    #   the original check-in and check-out dates to see if the hotel has any availabilities
-    #   and then display the recommended rooms/dates to the customer.
+    def find_reservations_by_customer_email(self, customer_email_request: FindReservationByCustomerEmailRequest) -> FindReservationByCustomerEmailResponse:
+        new_email_request = customer_email_request.get_customer_email()
 
-    def find_reservations_by_customer_email(self, customer_email: str) -> list[Reservation]:
-        customer_reserves = []
+        response: FindReservationByCustomerEmailResponse = FindReservationByCustomerEmailResponse()
         for reservation in self._reservation_repository.get_all_reservations():
-            if reservation.get_who_reserved_room().get_email() == customer_email:
-                customer_reserves.append(reservation)
-        return customer_reserves
+            if reservation.get_who_reserved_room().get_email() == new_email_request:
+                response.set_reservation_id(reservation.get_reservation_id())
+                response.set_room_to_reserve(reservation.get_reserved_room())
+                response.set_who_to_reserve(reservation.get_who_reserved_room())
+                response.set_check_in_date(reservation.get_check_in_date())
+                response.set_check_out_date(reservation.get_check_out_date())
+                # response.set_customer_reservations(reservation)
+        return response
 
     def display_reservations(self) -> list[Reservation]:
         return self._reservation_repository.get_all_reservations()
 
-    def find_reservation_by_id(self, reservation_id: int) -> Reservation | None:
+    def find_reservation_by_id(self, reservation_id_request: FindReservationByIdRequest) -> FindReservationByIdResponse | None:
+        new_reservation_id_response = reservation_id_request.get_id()
+
+        response: FindReservationByIdResponse = FindReservationByIdResponse()
         for reservation in self._reservation_repository.get_all_reservations():
-            if reservation.get_reservation_id() == reservation_id:
-                return reservation
+            if reservation.get_reservation_id() == new_reservation_id_response:
+                response.set_reservation(reservation)
+                return response
         return None
 #
 #
