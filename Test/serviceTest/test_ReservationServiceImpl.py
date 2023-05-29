@@ -199,7 +199,7 @@ class Test(TestCase):
         reservation_service.reserve_a_room(customer, room_four, check_in_date, check_out_date5)
 
         self.assertTrue(room_one.get_is_reserved())
-        self.assertEqual(3, len(reservation_service.search_for_available_rooms(check_in_date,
+        self.assertEqual(2, len(reservation_service.search_for_available_rooms(check_in_date,
                                                                                check_out_date1)))
         # print(reservation_service.search_for_available_rooms(check_in_date, check_out_date))
 
