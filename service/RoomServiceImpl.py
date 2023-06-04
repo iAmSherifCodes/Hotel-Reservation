@@ -14,11 +14,16 @@ class RoomServiceImpl(IRoom):
         return self._room_repository.save(room)
 
     def get_room_by_id(self, room_id: str) -> Room:
+        response = self._search_for_room_in_repository(room_id=room_id)
+        found_room = response is not None
+        if found_room: return response
+        raise RoomNotFound()
+
+    def _search_for_room_in_repository(self, room_id: str) -> Room | None:
         for room in self._room_repository.get_all_rooms():
             if room.get_room_id() == room_id:
                 return room
-        raise RoomNotFound()
+        return None
 
     def get_all_rooms(self) -> list[Room]:
         return self._room_repository.get_all_rooms()
-

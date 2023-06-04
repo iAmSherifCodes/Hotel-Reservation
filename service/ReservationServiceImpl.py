@@ -1,20 +1,20 @@
 from datetime import date, timedelta
+
+from Utils.Exceptions.NoReservationFound import NoReservationFound
 from Utils.Exceptions.RoomNotAvailableForReservation import RoomNotAvailableForReservation
 from data.Repository import ReservationRepository
-from data.Repository.ReservationRepositoryImpl import ReservationRepositoryImpl
 from data.Repository.ReservationRepositoryImpl import ReservationRepositoryImpl
 from data.model.Customer import Customer
 from data.model.Reservation import Reservation
 from data.model.Room import Room
 from dto.Request.FindReservationByCustomerEmailRequest import FindReservationByCustomerEmailRequest
 from dto.Request.FindReservationByIdRequest import FindReservationByIdRequest
-from dto.Request.FindRoomsRequest import FindRoomRequest
 from dto.Response.FindReservationByCustomerEmailResponse import FindReservationByCustomerEmailResponse
 from dto.Response.FindReservationByIdResponse import FindReservationByIdResponse
-from dto.Response.FindRoomResponse import FindRoomResponse
 from service.IReservationService import IReservationService
 from service.IRoom import IRoom
 from service.RoomServiceImpl import RoomServiceImpl
+
 
 
 class ReservationServiceImpl(IReservationService):
@@ -49,7 +49,6 @@ class ReservationServiceImpl(IReservationService):
             for reservation in self._reservation_repository.get_all_reservations():
                 if reservation.get_check_out_date() < check_in:
                     available_rooms.append(reservation.get_reserved_room())
-        # print(available_rooms)
 
         return available_rooms
 
@@ -72,12 +71,19 @@ class ReservationServiceImpl(IReservationService):
 
     def find_reservation_by_id(self, reservation_id_request: FindReservationByIdRequest) -> FindReservationByIdResponse | None:
         new_reservation_id_response = reservation_id_request.get_id()
-
         response: FindReservationByIdResponse = FindReservationByIdResponse()
+        found_reservation = self._search_for_reservation_in_repository(new_reservation_id_response)
+        if found_reservation is not None:
+            response.set_reservation(found_reservation)
+            return response
+
+        raise NoReservationFound
+
+    def _search_for_reservation_in_repository(self, reservation_id: str):
         for reservation in self._reservation_repository.get_all_reservations():
-            if reservation.get_reservation_id() == new_reservation_id_response:
-                response.set_reservation(reservation)
-                return response
+            if reservation.get_reservation_id() == reservation_id:
+                return reservation
+
         return None
 #
 #

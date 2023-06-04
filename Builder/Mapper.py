@@ -5,7 +5,7 @@ from dto.Request.RegisterCustomerRequest import RegisterCustomerRequest
 from dto.Response.RegisterCustomerResponse import RegisterCustomerResponse
 
 
-class Builder:
+class Mapper:
 
     @staticmethod
     def mapRegisterCustomerRequest(self, customer_request: RegisterCustomerRequest) -> Customer:

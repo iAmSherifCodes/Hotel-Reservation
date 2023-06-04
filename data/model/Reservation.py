@@ -1,9 +1,9 @@
+from datetime import date
+
 from multipledispatch import dispatch
 
-from Utils.AppUtils import AppUtils
 from data.model.Customer import Customer
 from data.model.Room import Room
-from datetime import date
 
 
 class Reservation:
