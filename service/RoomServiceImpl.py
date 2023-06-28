@@ -2,6 +2,8 @@ from Utils.Exceptions.RoomNotFound import RoomNotFound
 from data.Repository.RoomRepository import RoomRepository
 from data.Repository.RoomRepositoryImpl import RoomRepositoryImpl
 from data.model.Room import Room
+from dto.Request.AddRoomRequest import AddRoomRequest
+from dto.Response.AddRoomResponse import AddRoomResponse
 from service.IRoom import IRoom
 
 
@@ -10,7 +12,17 @@ class RoomServiceImpl(IRoom):
     def __init__(self):
         self._room_repository: RoomRepository = RoomRepositoryImpl()
 
-    def add_room(self, room: Room) -> Room:
+    def add_room(self, request: AddRoomRequest) -> AddRoomResponse:
+        room: Room = Room()
+        room.set_room_type(request.get_room_type())
+
+        saved_room: Room = self._room_repository.save(room)
+
+        response = AddRoomResponse()
+
+        response.set_room_type(saved_room.get_room_type())
+
+
         return self._room_repository.save(room)
 
     def get_room_by_id(self, room_id: str) -> Room:

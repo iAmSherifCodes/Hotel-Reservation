@@ -47,6 +47,7 @@ class Room:
     def set_is_reserved(self, room_status: bool) -> None:
         self._is_reserved = room_status
 
+
     def set_room_type(self, room_type: str) -> None:
         if room_type.lower() == "single":
             self._room_type = RoomType.SINGLE
